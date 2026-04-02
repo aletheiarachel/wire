@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WIRE Studio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="phone">
+
+    <!-- launcher -->
+    <section id="launcherScreen" class="launcher">
+      <button id="enterAppBtn" class="wire-icon" type="button" aria-label="Masuk ke WIRE Studio">
+        <div class="wire-mark">W</div>
+        <div class="wire-text">WIRE</div>
+      </button>
+    </section>
+
+    <!-- app -->
+    <section id="appScreen" class="hidden">
+
+      <div class="frame">
+        <div class="logo-bar">WIRE STUDIO</div>
+
+        <div class="layout">
+          <!-- sidebar -->
+          <aside class="sidebar">
+            <button class="menu-link" type="button" data-route="about">About WIRE</button>
+            <button class="menu-link" type="button" data-route="playlist">Mood Playlists</button>
+            <button class="menu-link" type="button" data-route="music">Music</button>
+            <button class="menu-link" type="button" data-route="artist">Artist</button>
+            <button class="menu-link" type="button" data-route="news">News</button>
+            <button class="menu-link" type="button" data-route="events">Events</button>
+            <button class="menu-link" type="button" data-route="achievements">Achievements</button>
+            <button class="menu-link" type="button" data-route="contact">Contact</button>
+            <button class="menu-link" type="button" data-route="suggestion">Suggestion</button>
+          </aside>
+
+          <!-- content -->
+          <main class="content">
+
+            <!-- about -->
+            <section class="route" data-route="about">
+              <div class="empty-about"></div>
+            </section>
+
+            <!-- mood playlist -->
+            <section class="route" data-route="playlist">
+              <div class="playlist-grid">
+
+                <button class="playlist-card tall electronic" type="button" data-track="electronic">
+                  <img class="mood-bg" src="assets/mood/electronic.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title">Electronic</div>
+                  <div class="shape-wrap">
+                    <img class="mood-art electronic-art" src="assets/mood/electronic.png" alt="" onerror="this.style.display='none'" />
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+                <button class="playlist-card medium chill" type="button" data-track="chill">
+                  <img class="mood-bg" src="assets/mood/chill.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title">Chill</div>
+                  <div class="shape-wrap">
+                    <div class="chill-art-shell">
+                      <img class="mood-art chill-art" src="assets/mood/cat.png" alt="" onerror="this.style.display='none'" />
+                    </div>
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+                <button class="playlist-card tall blob-card" type="button" data-track="workout-a">
+                  <img class="mood-bg" src="assets/mood/workout.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title">Workout</div>
+                  <div class="shape-wrap">
+                    <div class="blob-shape"></div>
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+                <button class="playlist-card tall star-card" type="button" data-track="pop-a">
+                  <img class="mood-bg" src="assets/mood/pop.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title right">Pop</div>
+                  <div class="shape-wrap">
+                    <div class="star-shape"></div>
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+                <button class="playlist-card short star-card" type="button" data-track="pop-b">
+                  <img class="mood-bg" src="assets/mood/pop2.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title right">Pop</div>
+                  <div class="shape-wrap">
+                    <div class="star-shape"></div>
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+                <button class="playlist-card tall blob-card" type="button" data-track="workout-b">
+                  <img class="mood-bg" src="assets/mood/workout2.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title">Workout</div>
+                  <div class="shape-wrap">
+                    <div class="blob-shape"></div>
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+                <button class="playlist-card short star-card" type="button" data-track="pop-c">
+                  <img class="mood-bg" src="assets/mood/pop3.jpg" alt="" onerror="this.style.display='none'">
+                  <div class="card-overlay"></div>
+                  <div class="card-title right">Pop</div>
+                  <div class="shape-wrap">
+                    <div class="star-shape"></div>
+                    <div class="line-stack">
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                      <span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                  </div>
+                  <div class="play-badge">Play</div>
+                </button>
+
+              </div>
+            </section>
+
+            <!-- music -->
+            <section class="route" data-route="music">
+
+              <div class="music-section">
+                <div class="section-bar">Secret Hideaway</div>
+                <div class="music-tracks">
+                  <button class="track-row" type="button" data-track="sh-aileen">
+                    <div class="track-thumb">
+                      <img src="assets/music/aileen.jpg" alt="Aileen" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Aileen</div>
+                    </div>
+                  </button>
+                  <button class="track-row" type="button" data-track="sh-melukis">
+                    <div class="track-thumb">
+                      <img src="assets/music/melukis-obituari.jpg" alt="Melukis Obituari" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Melukis Obituari</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="music-section">
+                <div class="section-bar">JUZZER</div>
+                <div class="music-tracks">
+                  <button class="track-row" type="button" data-track="jz-aku">
+                    <div class="track-thumb">
+                      <img src="assets/music/aku-kau-dan-musik.jpg" alt="Aku, Kau, dan Musik" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Aku, Kau,<br>dan Musik</div>
+                    </div>
+                  </button>
+                  <button class="track-row" type="button" data-track="jz-buku">
+                    <div class="track-thumb">
+                      <img src="assets/music/buku-pesta-cinta.jpg" alt="Buku Pesta Cinta" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Buku Pesta<br>Cinta</div>
+                    </div>
+                  </button>
+                  <button class="track-row" type="button" data-track="jz-apakah">
+                    <div class="track-thumb">
+                      <img src="assets/music/apakah-aku-harus-berubah.jpg" alt="Apakah Aku Harus Berubah Menjadi Perempuan" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Apakah Aku Harus<br>Berubah Menjadi<br>Perempuan</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="music-section">
+                <div class="section-bar">Arteeich</div>
+                <div class="music-tracks">
+                  <button class="track-row" type="button" data-track="ar-u">
+                    <div class="track-thumb">
+                      <img src="assets/music/u.jpg" alt="U" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">U</div>
+                    </div>
+                  </button>
+                  <button class="track-row" type="button" data-track="ar-fine">
+                    <div class="track-thumb">
+                      <img src="assets/music/fine.jpg" alt="Fine" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Fine</div>
+                    </div>
+                  </button>
+                  <button class="track-row" type="button" data-track="ar-ever">
+                    <div class="track-thumb">
+                      <img src="assets/music/ever.jpg" alt="Ever" onerror="this.style.display='none'">
+                    </div>
+                    <div class="track-info">
+                      <div class="track-name">Ever</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <div class="music-section">
+                <div class="section-bar">The Jorts</div>
+                <div class="music-empty"></div>
+              </div>
+
+            </section>
+
+            <!-- artist -->
+            <section class="route" data-route="artist">
+              <div class="artist-grid">
+
+                <button class="artist-card" type="button" data-artist="secret-hideaway">
+                  <div class="artist-thumb">
+                    <img src="assets/artist/secret-hideaway.jpg" alt="Secret Hideaway" onerror="this.style.display='none'">
+                  </div>
+                  <div class="artist-name">Secret Hideaway</div>
+                </button>
+
+                <button class="artist-card" type="button" data-artist="juzzer">
+                  <div class="artist-thumb">
+                    <img src="assets/artist/juzzer.jpg" alt="JUZZER" onerror="this.style.display='none'">
+                  </div>
+                  <div class="artist-name">JUZZER</div>
+                </button>
+
+                <button class="artist-card" type="button" data-artist="arteeich">
+                  <div class="artist-thumb">
+                    <img src="assets/artist/arteeich.jpg" alt="Arteeich" onerror="this.style.display='none'">
+                  </div>
+                  <div class="artist-name">Arteeich</div>
+                </button>
+
+                <button class="artist-card" type="button" data-artist="the-jorts">
+                  <div class="artist-thumb">
+                    <img src="assets/artist/the-jorts.jpg" alt="The Jorts" onerror="this.style.display='none'">
+                  </div>
+                  <div class="artist-name">The Jorts</div>
+                </button>
+
+                <button class="artist-card" type="button" data-artist="artist-5">
+                  <div class="artist-thumb">
+                    <img src="assets/artist/artist5.jpg" alt="Artist" onerror="this.style.display='none'">
+                  </div>
+                  <div class="artist-name">Artist 5</div>
+                </button>
+
+                <button class="artist-card" type="button" data-artist="artist-6">
+                  <div class="artist-thumb">
+                    <img src="assets/artist/artist6.jpg" alt="Artist" onerror="this.style.display='none'">
+                  </div>
+                  <div class="artist-name">Artist 6</div>
+                </button>
+
+              </div>
+            </section>
+
+            <!-- events -->
+            <section class="route" data-route="events">
+              <!-- tab bar -->
+              <div class="events-tabs">
+                <button class="events-tab active" type="button" data-tab="past">Past Events</button>
+                <button class="events-tab" type="button" data-tab="upcoming">Upcoming Events</button>
+              </div>
+
+              <!-- past events -->
+              <div class="events-panel active" data-panel="past">
+                <div class="past-events-grid">
+                  <div class="past-event-card">
+                    <div class="past-event-thumb">
+                      <img src="assets/events/event1.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="past-event-label">Wire Jam</div>
+                  </div>
+                  <div class="past-event-card">
+                    <div class="past-event-thumb">
+                      <img src="assets/events/event2.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="past-event-label">Wire Jam</div>
+                  </div>
+                  <div class="past-event-card">
+                    <div class="past-event-thumb">
+                      <img src="assets/events/event3.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="past-event-label">Wire Jam</div>
+                  </div>
+                  <div class="past-event-card">
+                    <div class="past-event-thumb">
+                      <img src="assets/events/event4.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="past-event-label">Wire Jam</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- upcoming events -->
+              <div class="events-panel" data-panel="upcoming">
+                <div class="upcoming-events-list">
+
+                  <div class="upcoming-event-row">
+                    <div class="upcoming-event-thumb">
+                      <img src="assets/events/upcoming1.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="upcoming-event-info">
+                      <div class="upcoming-event-name">Wire Jam</div>
+                      <div class="upcoming-event-meta">WIRE Studio · Jakarta</div>
+                      <div class="upcoming-event-date">15 Apr 2026</div>
+                    </div>
+                  </div>
+
+                  <div class="upcoming-event-row">
+                    <div class="upcoming-event-thumb">
+                      <img src="assets/events/upcoming2.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="upcoming-event-info">
+                      <div class="upcoming-event-name">Wire Jam</div>
+                      <div class="upcoming-event-meta">WIRE Studio · Jakarta</div>
+                      <div class="upcoming-event-date">22 Apr 2026</div>
+                    </div>
+                  </div>
+
+                  <div class="upcoming-event-row">
+                    <div class="upcoming-event-thumb">
+                      <img src="assets/events/upcoming3.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="upcoming-event-info">
+                      <div class="upcoming-event-name">Wire Jam</div>
+                      <div class="upcoming-event-meta">WIRE Studio · Jakarta</div>
+                      <div class="upcoming-event-date">1 Mei 2026</div>
+                    </div>
+                  </div>
+
+                  <div class="upcoming-event-row">
+                    <div class="upcoming-event-thumb">
+                      <img src="assets/events/upcoming4.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="upcoming-event-info">
+                      <div class="upcoming-event-name">Wire Jam</div>
+                      <div class="upcoming-event-meta">WIRE Studio · Jakarta</div>
+                      <div class="upcoming-event-date">10 Mei 2026</div>
+                    </div>
+                  </div>
+
+                  <div class="upcoming-event-row">
+                    <div class="upcoming-event-thumb">
+                      <img src="assets/events/upcoming5.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="upcoming-event-info">
+                      <div class="upcoming-event-name">Wire Jam</div>
+                      <div class="upcoming-event-meta">WIRE Studio · Jakarta</div>
+                      <div class="upcoming-event-date">20 Mei 2026</div>
+                    </div>
+                  </div>
+
+                  <div class="upcoming-event-row">
+                    <div class="upcoming-event-thumb">
+                      <img src="assets/events/upcoming6.jpg" alt="Wire Jam" onerror="this.style.display='none'">
+                    </div>
+                    <div class="upcoming-event-info">
+                      <div class="upcoming-event-name">Wire Jam</div>
+                      <div class="upcoming-event-meta">WIRE Studio · Jakarta</div>
+                      <div class="upcoming-event-date">31 Mei 2026</div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </section>
+
+            <!-- news — list view -->
+            <section class="route" data-route="news">
+              <div class="news-list" id="newsList">
+
+                <button class="news-row" type="button" data-article="1">
+                  <div class="news-thumb-large">
+                    <img src="assets/news/article1.jpg" alt="Article" onerror="this.style.display='none'">
+                  </div>
+                  <div class="news-info">
+                    <div class="news-title">Article</div>
+                    <div class="news-snippet">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                  </div>
+                </button>
+
+                <button class="news-row" type="button" data-article="2">
+                  <div class="news-thumb-large">
+                    <img src="assets/news/article2.jpg" alt="Article" onerror="this.style.display='none'">
+                  </div>
+                  <div class="news-info">
+                    <div class="news-title">Article</div>
+                    <div class="news-snippet">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                  </div>
+                </button>
+
+                <button class="news-row" type="button" data-article="3">
+                  <div class="news-thumb-large">
+                    <img src="assets/news/article3.jpg" alt="Article" onerror="this.style.display='none'">
+                  </div>
+                  <div class="news-info">
+                    <div class="news-title">Article</div>
+                    <div class="news-snippet">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                  </div>
+                </button>
+
+                <button class="news-row" type="button" data-article="4">
+                  <div class="news-thumb-large">
+                    <img src="assets/news/article4.jpg" alt="Article" onerror="this.style.display='none'">
+                  </div>
+                  <div class="news-info">
+                    <div class="news-title">Article</div>
+                    <div class="news-snippet">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                  </div>
+                </button>
+
+                <button class="news-row" type="button" data-article="5">
+                  <div class="news-thumb-large">
+                    <img src="assets/news/article5.jpg" alt="Article" onerror="this.style.display='none'">
+                  </div>
+                  <div class="news-info">
+                    <div class="news-title">Article</div>
+                    <div class="news-snippet">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+                  </div>
+                </button>
+
+              </div>
+
+              <!-- article detail (hidden by default) -->
+              <div class="article-detail hidden" id="articleDetail">
+                <button class="article-back-top" type="button" id="articleBack">
+                  <span class="back-arrow">&#8592;</span> Back
+                </button>
+                <div class="article-hero">
+                  <img id="articleHeroImg" src="" alt="">
+                </div>
+                <div class="article-body">
+                  <h2 class="article-title-text" id="articleTitle">Article</h2>
+                  <p class="article-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula felis nec nisl scelerisque, vitae pulvinar odio varius. Vivamus auctor, libero non cursus gravida, eros leo fringilla nisi, non tristique magna lorem sit amet orci.</p>
+                  <p class="article-text">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Fusce consequat lorem a nisi tempus, ac gravida arcu tempor.</p>
+                  <p class="article-text">Fusce euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+                  <p class="article-text">Donec euismod, nisl vel ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+                  <p class="article-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                  <p class="article-text">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt neque porro quisquam est.</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- achievements -->
+            <section class="route placeholder-page" data-route="achievements">
+              <div class="bar-title">Achievements</div>
+              <div class="placeholder-copy">Halaman achievements masih prototype.</div>
+            </section>
+
+            <!-- contact -->
+            <section class="route" data-route="contact">
+              <div class="contact-social-wrap">
+                <div class="contact-heading">Get in touch with us</div>
+                <div class="contact-subtext">Find us on social media or send us an email.</div>
+
+                <div class="social-links">
+
+                  <a class="social-row" href="https://instagram.com/wirestudio.music" target="_blank" rel="noopener">
+                    <div class="social-icon social-icon--instagram">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <circle cx="12" cy="12" r="4.5"/>
+                        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                      </svg>
+                    </div>
+                    <div class="social-info">
+                      <div class="social-platform">Instagram</div>
+                      <div class="social-handle">@wirestudio.music</div>
+                    </div>
+                    <div class="social-arrow">›</div>
+                  </a>
+
+                  <a class="social-row" href="https://x.com/wirestudio" target="_blank" rel="noopener">
+                    <div class="social-icon social-icon--x">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </div>
+                    <div class="social-info">
+                      <div class="social-platform">X (Twitter)</div>
+                      <div class="social-handle">@wirestudio</div>
+                    </div>
+                    <div class="social-arrow">›</div>
+                  </a>
+
+                  <a class="social-row" href="mailto:hello@wirestudio.id" target="_blank" rel="noopener">
+                    <div class="social-icon social-icon--gmail">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <polyline points="2,4 12,13 22,4"/>
+                      </svg>
+                    </div>
+                    <div class="social-info">
+                      <div class="social-platform">Email</div>
+                      <div class="social-handle">hello@wirestudio.id</div>
+                    </div>
+                    <div class="social-arrow">›</div>
+                  </a>
+
+                  <a class="social-row" href="https://tiktok.com/@wirestudio" target="_blank" rel="noopener">
+                    <div class="social-icon social-icon--tiktok">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.12 8.12 0 004.76 1.52V6.76a4.85 4.85 0 01-1-.07z"/>
+                      </svg>
+                    </div>
+                    <div class="social-info">
+                      <div class="social-platform">TikTok</div>
+                      <div class="social-handle">@wirestudio</div>
+                    </div>
+                    <div class="social-arrow">›</div>
+                  </a>
+
+                  <a class="social-row" href="https://youtube.com/@wirestudio" target="_blank" rel="noopener">
+                    <div class="social-icon social-icon--youtube">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/>
+                      </svg>
+                    </div>
+                    <div class="social-info">
+                      <div class="social-platform">YouTube</div>
+                      <div class="social-handle">WIRE Studio</div>
+                    </div>
+                    <div class="social-arrow">›</div>
+                  </a>
+
+                  <a class="social-row" href="https://open.spotify.com/user/wirestudio" target="_blank" rel="noopener">
+                    <div class="social-icon social-icon--spotify">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path fill="white" d="M16.59 15.34a.75.75 0 01-1.03.25c-2.84-1.74-6.41-2.13-10.62-1.17a.75.75 0 01-.35-1.46c4.6-1.05 8.55-.6 11.75 1.35a.75.75 0 01.25 1.03zm1.4-3.12a.94.94 0 01-1.3.31C13.49 10.3 9.29 9.8 5.9 10.82a.94.94 0 01-.54-1.8c3.82-1.15 8.56-.59 11.93 1.89a.94.94 0 01.3 1.31zm.12-3.25C14.7 6.3 9.15 6.11 5.9 7.1a1.12 1.12 0 01-.65-2.15C9.1 3.84 15.28 4.05 19.35 6.7a1.12 1.12 0 01-1.24 1.87z"/>
+                      </svg>
+                    </div>
+                    <div class="social-info">
+                      <div class="social-platform">Spotify</div>
+                      <div class="social-handle">WIRE Studio</div>
+                    </div>
+                    <div class="social-arrow">›</div>
+                  </a>
+
+                </div>
+              </div>
+            </section>
+
+            <!-- suggestion -->
+            <section class="route" data-route="suggestion">
+              <div class="suggestion-wrap" id="suggestionForm">
+                <div class="suggestion-thanks-text">Thank you for using our website!</div>
+                <div class="suggestion-sub">Feel free to share any suggestions to help us improve.</div>
+                <div class="suggestion-input-row">
+                  <input class="suggestion-input" type="text" placeholder="write your suggestion here" id="suggestionInput">
+                  <button class="suggestion-send-btn" type="button" id="suggestionSubmit">Send</button>
+                </div>
+              </div>
+              <div class="form-thanks hidden" id="suggestionThanks">
+                <div class="thanks-title">Thank you for using our website!</div>
+                <div class="thanks-sub">Your suggestion has been received.</div>
+              </div>
+            </section>
+
+
+          </main>
+        </div>
+
+        <!-- now playing -->
+        <div class="now-playing">
+          <div class="now-top">
+            <div id="nowCover" class="now-cover">
+              <div id="nowCoverShape" class="cover-shape electronic"></div>
+            </div>
+            <div class="now-meta">
+              <div class="now-label">Now Playing</div>
+              <div id="nowTitle" class="now-title">Belum ada lagu</div>
+              <div id="nowArtist" class="now-artist">Klik mood playlist atau musik</div>
+            </div>
+            <button id="playPauseBtn" class="now-button" type="button">▶</button>
+          </div>
+          <div class="now-progress">
+            <div class="progress-track">
+              <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <div class="progress-time">
+              <span id="currentTime">0:00</span>
+              <span id="durationTime">0:00</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <audio id="audioPlayer" preload="metadata"></audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
