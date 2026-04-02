@@ -392,12 +392,18 @@ eventsTabs.forEach((tab) => {
   tab.addEventListener('click', () => {
     const target = tab.dataset.tab;
 
+    // Hilangkan semua class active
     eventsTabs.forEach(t => t.classList.remove('active'));
     eventsPanels.forEach(p => p.classList.remove('active'));
 
+    // Tambahkan active ke yang diklik
     tab.classList.add('active');
-    const panel = document.querySelector(`.events-panel[data-panel="${target}"]`);
-    if (panel) panel.classList.add('active');
+    
+    // Cari panel berdasarkan id atau data-panel
+    const panel = document.getElementById(target);
+    if (panel) {
+      panel.classList.add('active');
+    }
   });
 });
 
@@ -542,3 +548,23 @@ if (playPauseBtn) {
 resetProgressUI();
 syncMainPlayButton();
 updateActiveStates();
+
+function openArtistDetail(name, imgSrc, bioText) {
+    document.getElementById('artistListContainer').classList.add('hidden');
+    document.getElementById('artistDetailContainer').classList.remove('hidden');
+
+    document.getElementById('displayArtistName').innerText = name;
+    document.getElementById('displayArtistImg').src = imgSrc;
+    // Pakai innerHTML supaya <br> terbaca jadi paragraf
+    document.getElementById('displayArtistBio').innerHTML = bioText;
+
+    // Otomatis scroll ke atas pas buka detail
+    window.scrollTo(0, 0);
+}
+
+function closeArtistDetail() {
+    document.getElementById('artistListContainer').classList.remove('hidden');
+    document.getElementById('artistDetailContainer').classList.add('hidden');
+}
+
+

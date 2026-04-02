@@ -1,3 +1,48 @@
+/* 1. Import Coolvetica (Pastikan file font ada di folder assets/fonts/) */
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('assets/fonts/coolvetica.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 2. Set Variabel Font agar mudah diganti-ganti */
+:root {
+    --title-font: 'Coolvetica', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --body-font: 'Poppins', sans-serif;
+}
+
+/* 3. Terapkan ke Seluruh Elemen */
+body {
+    font-family: var(--body-font);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Judul-judul Besar Pakai Coolvetica */
+.sidebar-logo, 
+.about-title, 
+.det-title, 
+.section-bar {
+    font-family: var(--title-font);
+    letter-spacing: 1px; /* Coolvetica biasanya cakep kalau agak rapat atau renggang dikit */
+}
+
+/* Teks Paragraf & Info Pakai Poppins */
+.about-text, 
+.track-name, 
+.artist-name, 
+.player-title, 
+.player-artist,
+.det-text {
+    font-family: var(--body-font);
+    font-weight: 400; /* Normal */
+}
+
+/* Untuk Penekanan (Bold) */
+.player-title, .track-name {
+    font-weight: 600;
+}
+
 :root{
   --bg:#e8e5d4;
   --paper:#efeedf;
@@ -208,12 +253,77 @@ button{
   }
 }
 
-/* ===== about ===== */
-.empty-about{
-  min-height:560px;
-  border:1px dashed rgba(12,94,0,.20);
-  background:rgba(255,255,255,.18);
-  border-radius:4px;
+/* ABOUT PAGE STYLE */
+.about-container {
+  padding: 40px 10px; /* Jarak atas-bawah lebih lega */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Memastikan semua ke tengah */
+  text-align: center;  /* Tulisan jadi rata tengah */
+}
+
+.about-title {
+  font-family: var(--event-font);
+  font-size: 18px;
+  font-weight: 900;
+  color: #2d3436;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.about-text {
+  font-family: var(--event-font);
+  font-size: 12px;
+  line-height: 1.6; /* Biar paragraf nggak rapat banget */
+  color: #57606f;
+  margin-top: 20px;
+  max-width: 90%; /* Supaya teks nggak nempel banget ke pinggir HP */
+}
+
+/* ABOUT PAGE STYLE - UPDATED */
+.about-container {
+  padding: 50px 15px; /* Jarak atas-bawah sedikit lebih lega, jarak samping pas HP */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Memastikan container di tengah */
+  text-align: center;  /* Judul tetap di tengah */
+}
+
+.about-title {
+  font-family: var(--event-font);
+  font-size: 22px; /* DIPERBESAR (dari sebelumnya ~18px) */
+  font-weight: 900;
+  color: #2d3436;
+  letter-spacing: 2px;
+  margin-bottom: 30px; /* Jarak ke paragraf lebih pas tanpa divider */
+  text-transform: uppercase;
+}
+
+.about-text {
+  font-family: var(--event-font);
+  font-size: 13px; /* Ukuran font paragraf sedikit disesuaikan agar proporsional */
+  line-height: 1.7; /* Jarak antar baris sedikit lebih longgar agar enak dibaca */
+  color: #57606f;
+  
+  /* RATA KANAN KIRI */
+  text-align: justify; 
+  /* Memberikan ruang di kanan-kiri agar teks justify terlihat rapi di HP */
+  max-width: 95%; 
+  margin: 0 auto;
+}
+
+/* Memastikan class hidden dari divider lama tidak mengganggu jika masih ada */
+.det-divider {
+    display: none !important;
+}
+
+/* Divider tambahan jika belum ada */
+.det-divider {
+  width: 40px;
+  height: 2px;
+  background-color: #27ae60; /* Warna hijau khas UI/Media Produksi */
+  margin: 0 auto;
 }
 
 /* ===== mood playlist ===== */
@@ -596,140 +706,170 @@ button{
   padding:0 2px;
 }
 
-/* ===== events ===== */
-.events-tabs{
-  display:flex;
-  border-bottom:1px solid var(--line);
-  margin-bottom:12px;
-  gap:0;
+/* ===== EVENTS SECTION ===== */
+:root {
+  /* Ganti 'Inter' dengan font utama website kamu jika ada */
+  --event-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-.events-tab{
-  flex:1;
-  border:none;
-  background:none;
-  padding:6px 4px;
-  font-size:10px;
-  font-weight:700;
-  color:var(--muted);
-  cursor:pointer;
-  text-align:center;
-  border-bottom:2px solid transparent;
-  margin-bottom:-1px;
-  transition:color .15s, border-color .15s;
+.events-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 12px;
+  font-family: var(--event-font);
 }
 
-.events-tab.active{
-  color:var(--green);
-  border-bottom-color:var(--green);
+.events-tab {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 8px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
 }
 
-.events-panel{
-  display:none;
+.events-tab.active {
+  color: #27ae60;
+  border-bottom-color: #27ae60;
 }
 
-.events-panel.active{
-  display:block;
-  animation:fadeIn .22s ease;
+.events-panel {
+  display: none;
 }
 
-/* past events */
-.past-events-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
+.events-panel.active {
+  display: block !important;
 }
 
-.past-event-card{
-  display:flex;
-  flex-direction:column;
-  gap:4px;
+/* TANGGAL HEADER (Satu Jenis Font & Bold) */
+.event-group-date {
+  font-family: var(--event-font); /* Jenis font disamakan */
+  font-size: 15px; /* Ukuran disamakan */
+  font-weight: 800;
+  color: #2d3436;
+  margin: 15px 0 6px 0;
+  display: block;
+  text-transform: uppercase;
 }
 
-.past-event-thumb{
-  width:100%;
-  aspect-ratio:4/3;
-  background:#c8c4b4;
-  overflow:hidden;
-  border:1px solid rgba(0,0,0,.07);
+/* ROW EVENT */
+.event-row {
+  display: grid;
+  grid-template-columns: 85px 1fr;
+  gap: 12px;
+  padding: 0 0 16px 0;
+  background: transparent;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  align-items: flex-start;
 }
 
-.past-event-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+.event-row:last-of-type {
+  border-bottom: none;
 }
 
-.past-event-label{
-  font-size:9px;
-  font-weight:700;
-  color:var(--ink);
+/* POSTER THUMBNAIL */
+.event-thumb {
+  width: 85px;
+  height: 105px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* upcoming events */
-.upcoming-events-list{
-  display:flex;
-  flex-direction:column;
-  gap:0;
+.event-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.upcoming-event-row{
-  display:grid;
-  grid-template-columns:54px 1fr;
-  gap:10px;
-  align-items:center;
-  padding:8px 0;
-  border-bottom:1px solid rgba(135,133,119,.22);
-  cursor:pointer;
-  transition:background .15s;
+/* INFO CONTAINER */
+.event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--event-font); /* Jenis font disamakan */
 }
 
-.upcoming-event-row:last-child{
-  border-bottom:none;
+/* NAMA EVENT (WIREJAM) */
+.event-name {
+  font-family: var(--event-font); /* Jenis font disamakan */
+  font-size: 15px; /* Ukuran disamakan */
+  font-weight: 800;
+  color: #2d3436;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
 }
 
-.upcoming-event-row:hover{
-  background:rgba(12,94,0,.04);
+/* DETAIL COLUMN (JAM & TEMPAT VERTIKAL) */
+.event-details-column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 2px 0;
 }
 
-.upcoming-event-thumb{
-  width:54px;
-  height:40px;
-  background:#c8c4b4;
-  overflow:hidden;
-  border:1px solid rgba(0,0,0,.07);
-  flex:0 0 auto;
+/* OVAL JAM & TEMPAT */
+.detail-oval {
+  background: #f1f2f6;
+  color: #57606f;
+  font-family: var(--event-font); /* Jenis font disamakan */
+  font-size: 9.5px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
 }
 
-.upcoming-event-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
+/* RSVP BOX */
+.rsvp-box {
+  align-self: flex-start;
+  background: #fff0f0;
+  color: #eb4d4b;
+  font-weight: 900;
+  font-family: var(--event-font);
+  font-size: 9.5px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
 }
 
-.upcoming-event-info{
-  min-width:0;
+/* Container untuk memposisikan ke kanan bawah */
+.pagination-right {
+  display: flex;
+  justify-content: flex-end; /* Rata kanan */
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding-right: 5px;
 }
 
-.upcoming-event-name{
-  font-size:11px;
-  font-weight:700;
-  color:var(--ink);
+/* Gaya teks NEXT seperti di menu Artist */
+.artist-style-next {
+  font-family: var(--event-font);
+  font-size: 11px; /* Ukuran font menu */
+  font-weight: 700;
+  color: #2d3436;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
 }
 
-.upcoming-event-meta{
-  font-size:9px;
-  color:var(--muted);
-  margin-top:1px;
-}
-
-.upcoming-event-date{
-  font-size:9px;
-  color:var(--green);
-  font-weight:700;
-  margin-top:2px;
+.artist-style-next:hover {
+  color: #27ae60; /* Berubah hijau saat di-hover */
+  border-bottom: 1px solid #27ae60;
+  padding-right: 5px; /* Efek gerak sedikit ke kanan */
 }
 
 /* ===== news ===== */
@@ -1321,4 +1461,307 @@ button{
   z-index:1;
   background:linear-gradient(180deg, rgba(0,0,0,.32) 0%, rgba(0,0,0,.04) 45%, rgba(0,0,0,.42) 100%);
   pointer-events:none;
+}
+
+/* Pastikan class hidden sudah ada */
+.hidden {
+  display: none !important;
+}
+
+/* Styling untuk halaman detail artist */
+#artistDetailContainer {
+  padding: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.det-hero-frame {
+  width: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #222;
+}
+
+.det-hero-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.det-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.det-divider {
+  width: 50px;
+  height: 4px;
+  background: #008000; /* Warna hijau khas WIRE */
+  margin-bottom: 20px;
+}
+
+.det-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #ccc;
+  text-align: justify;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Teks Penjelasan Hitam & Rapi */
+.det-text {
+  color: #000000 !important;
+  line-height: 1.6;
+  text-align: justify;
+  margin-bottom: 30px;
+}
+
+/* Judul Artist Hijau */
+.det-title {
+  color: #008000 !important;
+  font-weight: bold;
+}
+
+/* Wrapper Tombol Back */
+.back-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+/* Update Style Tombol Back jadi lebih kecil */
+.pill-back-button {
+  background-color: #008000;
+  color: white;
+  border: none;
+  /* Padding dikurangi supaya lebih kecil */
+  padding: 6px 18px; 
+  border-radius: 50px; /* Tetap lonjong sempurna */
+  font-weight: 600;
+  cursor: pointer;
+  /* Ukuran font diperkecil */
+  font-size: 0.75rem; 
+  transition: 0.3s;
+  letter-spacing: 0.5px; /* Biar lebih estetik */
+}
+
+.pill-back-button:hover {
+  background-color: #006400;
+  transform: scale(1.05);
+}
+
+/* Jarak container tombolnya juga kita kecilin sedikit */
+.back-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+
+.phone-wrapper {
+  width: 100%;
+  max-width: 430px; /* Standar lebar HP */
+  height: 100vh;
+  background-color: #f0eee2; /* Warna background web kamu */
+  margin: 0 auto; /* Biar nempel di tengah layar laptop */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden; /* Biar konten nggak bocor keluar */
+  box-shadow: 0 0 50px rgba(0,0,0,0.2); /* Efek bayangan biar estetik */
+}
+
+/* ACHIEVEMENTS PAGE STYLING */
+.achievements-page-wrapper {
+    padding: 40px 15px; /* Jarak atas/bawah dan samping */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Meratakan konten ke tengah secara horizontal */
+}
+
+/* Judul Utama Pakai Coolvetica */
+.achievements-main-title {
+    font-family: 'CoolveticaCustom', sans-serif; /* Ganti dengan nama @font-face Coolvetica kamu */
+    font-size: 32px;
+    font-weight: bold;
+    color: #2d3436;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px; /* Jarak jauh ke konten di bawahnya */
+    text-align: center;
+}
+
+/* Block Konten (Foto + Teks) */
+.achievement-content-block {
+    width: 100%;
+    max-width: 380px; /* Membatasi lebar agar rapi di HP */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px; /* Jarak jika ada block achievement lain */
+}
+
+/* Bingkai Foto */
+.achievement-photo-frame {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Sudut tumpul estetik */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Bayangan halus */
+    margin-bottom: 20px; /* Jarak foto ke keterangan di bawahnya */
+}
+
+.achievement-photo-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Box Teks Keterangan */
+.achievement-description-box {
+    width: 100%;
+    text-align: center; /* Default teks di tengah untuk judul item */
+}
+
+/* Judul Item Achievement (Pake Poppins Bold) */
+.achievement-item-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #2d3436;
+    margin-bottom: 10px;
+}
+
+/* Teks Detail (Pake Poppins Regular/Light) */
+.achievement-text-detail {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #57606f;
+    
+    /* Bikin teks rata kanan-kiri agar rapi */
+    text-align: justify; 
+    
+    /* Kasih padding sikit biar gak nempel kali ke pinggir box */
+    padding: 0 5px; 
+    margin-bottom: 10px;
+}
+
+/* Tanggal */
+.achievement-date {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    color: #a4b0be;
+    display: block; /* Agar turun ke baris baru */
+}
+
+/* Pastikan ini ada di style.css */
+.hidden {
+    display: none !important;
+}
+
+/* Styling tambahan agar konten achievement tidak bertumpuk */
+.route {
+    width: 100%;
+    min-height: 100%;
+}
+
+/* ACHIEVEMENTS PAGE STYLING */
+.achievements-page-wrapper {
+    padding: 40px 15px; /* Jarak atas/bawah dan samping */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Meratakan konten ke tengah secara horizontal */
+}
+
+/* Judul Utama Pakai Coolvetica */
+.achievements-main-title {
+    font-family: 'Coolvetica Rg', sans-serif; /* Pastikan nama font Coolvetica kamu sesuai */
+    font-size: 32px;
+    font-weight: bold;
+    color: #2d3436;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px; /* Jarak jauh ke konten di bawahnya */
+    text-align: center;
+}
+
+/* Block Konten (Foto + Teks) */
+.achievement-content-block {
+    width: 100%;
+    max-width: 380px; /* Membatasi lebar agar rapi di HP */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* FOTO RASIO 4:5 (Frame Foto) */
+.achievement-photo-frame-45 {
+    width: 100%;
+    /* Rumus Rasio 4:5 (Tinggi / Lebar * 100) = (5 / 4 * 100) = 125% */
+    padding-top: 125%; 
+    position: relative; /* Penting untuk isi img */
+    border-radius: 8px; /* Sudut tumpul estetik */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Bayangan halus */
+    margin-bottom: 25px; /* Jarak foto ke keterangan di bawahnya */
+    background-color: #eee; /* Warna default jika foto error */
+}
+
+.achievement-photo-frame-45 img {
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Mengisi full frame */
+    top: 0;
+    left: 0;
+    object-fit: cover; /* Foto full mengisi bingkai tanpa gepeng */
+    display: block;
+}
+
+/* Box Teks Keterangan */
+.achievement-description-box {
+    width: 100%;
+    text-align: center; /* Default teks di tengah untuk judul item */
+}
+
+/* Judul Item Achievement (Pake Poppins Bold) */
+.achievement-item-title {
+    font-family: 'Poppins', sans-serif; /* Pastikan nama font Poppins kamu sesuai */
+    font-weight: 600;
+    font-size: 16px;
+    color: #2d3436;
+    margin-bottom: 10px;
+}
+
+/* Teks Detail (Pake Poppins Regular/Light) */
+.achievement-text-detail {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #57606f;
+    
+    /* Bikin teks rata kanan-kiri agar rapi */
+    text-align: justify; 
+    
+    /* Kasih padding sikit biar gak nempel kali ke pinggir box */
+    padding: 0 5px; 
+    margin-bottom: 10px;
+}
+
+/* Tanggal */
+.achievement-date {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    color: #a4b0be;
 }
