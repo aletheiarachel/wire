@@ -56,17 +56,26 @@
 
             <!-- about -->
             <section class="route" data-route="about">
-  <div class="about-container">
-    
-    <h2 class="about-title">WHAT IS WIRE ?</h2>
-    
-    <p class="about-text">
-      WIRE adalah studio Musik dan Audio di Produksi Media UI yang berfokus pada produksi (music production) serta bisnis musik dan audio (mini-release label). 
-      <br><br>
-      Dibentuk oleh para mahasiswa dan dosen Produksi Media konsentrasi musik, mini-label ini berfokus sebagai praktek profesional para mahasiswa dalam lingkup musik bisnis, produksi, dan pemasaran musik.
-    </p>
+  <div class="about-redesign">
 
+    <!-- headline -->
+    <div class="about-headline">
+      <span class="about-headline-thin">what is</span>
+      <span class="about-headline-bold">WIRE?</span>
     </div>
+
+    <!-- ruled body text -->
+    <div class="about-ruled">
+      <p class="about-ruled-text">
+        WIRE adalah studio Musik dan Audio di Produksi Media UI yang berfokus pada produksi (music production) serta bisnis musik dan audio (mini-release label).
+      </p>
+      <p class="about-ruled-text">
+        Dibentuk oleh para mahasiswa dan dosen Produksi Media konsentrasi musik, mini-label ini berfokus sebagai praktek profesional para mahasiswa dalam lingkup musik bisnis, produksi, dan pemasaran musik.
+      </p>
+    </div>
+
+
+  </div>
 </section>
 
             <!-- mood playlist -->
@@ -121,7 +130,7 @@
       </button>
 
       <button class="track-row" type="button" data-track="sh-melukis"
-              onclick="playMusic('Melukis Obituari', 'Secret Hideaway', 'Melukis Obituari.jpg', 'melukis.mp3')">
+              onclick="playMusic('Melukis Obituari', 'Secret Hideaway', 'Melukis Obituari.jpg', 'Secret Hideaway - Melukis Obituari (SPOTISAVER).mp3')">
         <div class="track-thumb">
           <img src="Melukis Obituari.jpg" alt="Melukis Obituari" onerror="this.style.display='none'">
         </div>
@@ -131,7 +140,7 @@
       </button>
 
       <button class="track-row" type="button" data-track="sh-try"
-              onclick="playMusic('Try Again', 'Secret Hideaway', 'Try Again.jpg', 'tryagain.mp3')">
+              onclick="playMusic('Try Again', 'Secret Hideaway', 'Try Again.jpg', 'Secret Hideaway - Try Again (SPOTISAVER).mp3')">
         <div class="track-thumb">
           <img src="Try Again.jpg" alt="Try Again" onerror="this.style.display='none'">
         </div>
@@ -141,7 +150,7 @@
       </button>
 
       <button class="track-row" type="button" data-track="sh-hideaway"
-              onclick="playMusic('Hideaway', 'Secret Hideaway', 'Hideaway.jpg', 'hideaway.mp3')">
+              onclick="playMusic('Hideaway', 'Secret Hideaway', 'Hideaway.jpg', 'Secret Hideaway - Hideaway (SPOTISAVER).mp3')">
         <div class="track-thumb">
           <img src="Hideaway.jpg" alt="Hideaway" onerror="this.style.display='none'">
         </div>
@@ -150,64 +159,50 @@
         </div>
       </button>
 
-      <button class="track-row" type="button" data-track="sh-firstlook"
-              onclick="playMusic('Firstlook', 'Secret Hideaway', 'First Look.jpg', 'firstlook.mp3')">
-        <div class="track-thumb">
-          <img src="First Look.jpg" alt="Firstlook" onerror="this.style.display='none'">
-        </div>
-        <div class="track-info">
-          <div class="track-name">First Look</div>
-        </div>
-
     </div>
   </div>
 
   <div class="music-section">
     <div class="section-bar">Arteeich</div>
     <div class="music-tracks">
-      <button class="track-row" type="button" data-track="sh-ever"
-              onclick="playMusic('Ever', 'Arteeich', 'Arteeich.jpg', 'Ever.mp3')">
+      <button class="track-row" type="button" data-track="sh-ever">
         <div class="track-thumb">
-          <img src="Ever.jpg" alt="Arteeich" onerror="this.style.display='none'">
+          <img src="Ever.jpg" alt="Ever" onerror="this.style.display='none'">
         </div>
         <div class="track-info">
-          <div class="track-name">Arteeich</div>
+          <div class="track-name">Ever</div>
         </div>
       </button>
-      <button class="track-row" type="button" data-track="sh-u"
-              onclick="playMusic('U', 'Arteeich', 'Arteeich.jpg', 'U.mp3')">
+      <button class="track-row" type="button" data-track="sh-u">
         <div class="track-thumb">
-          <img src="U.jpg" alt="Arteeich" onerror="this.style.display='none'">
+          <img src="U.jpg" alt="U" onerror="this.style.display='none'">
         </div>
         <div class="track-info">
-          <div class="track-name">Arteeich</div>
+          <div class="track-name">U</div>
         </div>
       </button>
-      <button class="track-row" type="button" data-track="sh-sike"
-              onclick="playMusic('Sike', 'Arteeich', 'Arteeich.jpg', 'Sike.mp3')">
+      <button class="track-row" type="button" data-track="sh-sike">
         <div class="track-thumb">
-          <img src="Sike.jpg" alt="Arteeich" onerror="this.style.display='none'">
+          <img src="Sike.jpg" alt="Sike" onerror="this.style.display='none'">
         </div>
         <div class="track-info">
-          <div class="track-name">Arteeich</div>
+          <div class="track-name">Sike</div>
         </div>
       </button>
-      <button class="track-row" type="button" data-track="sh-fool"
-              onclick="playMusic('Fool', 'Arteeich', 'Arteeich.jpg', 'Fool.mp3')">
+      <button class="track-row" type="button" data-track="sh-fool">
         <div class="track-thumb">
-          <img src="fool.jpg" alt="Arteeich" onerror="this.style.display='none'">
+          <img src="fool.jpg" alt="Fool" onerror="this.style.display='none'">
         </div>
         <div class="track-info">
-          <div class="track-name">Arteeich</div>
+          <div class="track-name">Fool</div>
         </div>
       </button>
-      <button class="track-row" type="button" data-track="sh-fine"
-              onclick="playMusic('Sike', 'Arteeich', 'Arteeich.jpg', 'Fine.mp3')">
+      <button class="track-row" type="button" data-track="sh-fine">
         <div class="track-thumb">
-          <img src="fool.jpg" alt="Arteeich" onerror="this.style.display='none'">
+          <img src="fool.jpg" alt="Fine" onerror="this.style.display='none'">
         </div>
         <div class="track-info">
-          <div class="track-name">Arteeich</div>
+          <div class="track-name">Fine</div>
         </div>
       </button>
     </div>
@@ -216,13 +211,12 @@
   <div class="music-section">
     <div class="section-bar">JUZZER</div>
     <div class="music-tracks">
-      <button class="track-row" type="button" data-track="jz-aku"
-              onclick="playMusic('Aku, Kau, dan Musik', 'JUZZER', 'JUZZER.jpg', 'Aku Kau dan Musik.mp3')">
+      <button class="track-row" type="button" data-track="jz-aku">
         <div class="track-thumb">
-          <img src="Aku Kau Dan Musik.jpg" alt="JUZZER" onerror="this.style.display='none'">
+          <img src="Aku Kau Dan Musik.jpg" alt="Aku, Kau, dan Musik" onerror="this.style.display='none'">
         </div>
         <div class="track-info">
-          <div class="track-name">Aku Kau dan Musik</div>
+          <div class="track-name">Aku, Kau, dan Musik</div>
         </div>
       </button>
       <button class="track-row" type="button" data-track="jz-buku">
@@ -239,38 +233,6 @@
         </div>
         <div class="track-info">
           <div class="track-name">Apakah Aku Harus Berubah Menjadi Perempuan</div>
-        </div>
-      </button>
-      <button class="track-row" type="button" data-track="jz-asam">
-        <div class="track-thumb">
-          <img src="Buku Pesta Cinta.jpg" alt="Asam Manis" onerror="this.style.display='none'">
-        </div>
-        <div class="track-info">
-          <div class="track-name">Asam Manis</div>
-        </div>
-      </button>
-      <button class="track-row" type="button" data-track="jz-hey">
-        <div class="track-thumb">
-          <img src="Hey Kau Gadis Nan Jauh Di Sana (Live).jpg" alt="Hey Kau Gadis Nan Jauh Di Sana (Live)" onerror="this.style.display='none'">
-        </div>
-        <div class="track-info">
-          <div class="track-name">Hey Kau Gadis Nan Jauh Di Sana (Live)</div>
-        </div>
-      </button>
-      <button class="track-row" type="button" data-track="jz-malam">
-        <div class="track-thumb">
-          <img src="Malam Yang Gulita.jpg" alt="Malam Yang Gulita" onerror="this.style.display='none'">
-        </div>
-        <div class="track-info">
-          <div class="track-name">Malam Yang Gulita</div>
-        </div>
-      </button>
-      <button class="track-row" type="button" data-track="jz-romansa">
-        <div class="track-thumb">
-          <img src="Romansa Akhir Pekan.jpg" alt="Romansa Akhir Pekan" onerror="this.style.display='none'">
-        </div>
-        <div class="track-info">
-          <div class="track-name">Romansa Akhir Pekan</div>
         </div>
       </button>
     </div>
@@ -534,21 +496,21 @@
 
               </div>
 
-             <div class="article-detail hidden" id="articleDetail">
-  <button class="article-back-top" type="button" id="articleBack">
-    <span class="back-arrow">&#8592;</span> Back
-  </button>
+              <!-- article detail (hidden by default) -->
+              <div class="article-detail hidden" id="articleDetail">
+                <button class="article-back-top" type="button" id="articleBack">
+                  <span class="back-arrow">&#8592;</span> Back
+                </button>
+                <div class="article-hero">
+                  <img id="articleHeroImg" src="" alt="">
+                </div>
+                <div class="article-body" id="articleBody">
+                  <h2 class="article-title-text" id="articleTitle">Article</h2>
+                </div>
+              </div>
+            </section>
 
-  <div class="article-hero">
-    <img id="articleHeroImg" src="foto news 1.jpeg" alt="Article">
-  </div>
-
-  <div class="article-body">
-    <h2 class="article-title-text" id="articleTitle">Article</h2>
-    <div class="news-snippet" id="articleDate" style="text-align:center; margin-bottom:12px;"></div>
-    <div id="articleBody"></div>
-  </div>
-</div>
+              
 
             <!-- achievements -->
 <section class="route placeholder-page" data-route="achievements">
@@ -587,7 +549,6 @@
     </p>
 </div>
 </section>
-
 <!--CONTACT-->
 <section class="route" data-route="contact">
   <div class="contact-social-wrap">
@@ -611,20 +572,19 @@
         <div class="social-arrow">›</div>
       </a>
 
-      <a class="social-row" href="mailto:wirestudiomusic@gmail.com" target="_blank" rel="noopener">
-        <div class="social-icon social-icon--gmail">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <polyline points="2,4 12,13 22,4"/>
-          </svg>
-        </div>
-        <div class="social-info">
-          <div class="social-platform">Email</div>
-          <div class="social-handle">wirestudiomusic@gmail.com</div>
-        </div>
-        <div class="social-arrow">›</div>
-      </a>
-
+      <a class="social-row" href="mailto:wiredstudiomusic@gmail.com">
+  <div class="social-icon social-icon--gmail">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="2"/>
+      <polyline points="2,4 12,13 22,4"/>
+    </svg>
+  </div>
+  <div class="social-info">
+    <div class="social-platform">Email</div>
+    <div class="social-handle">wiredstudiomusic@gmail.com</div>
+  </div>
+  <div class="social-arrow">›</div>
+</a>
     </div>
   </div>
 </section>
@@ -673,15 +633,10 @@
             </div>
           </div>
         </div>
-
-      </div>
+      <audio id="audioPlayer" preload="metadata"></audio>
     </section>
-
-    <audio id="audioPlayer" preload="metadata"></audio>
   </div>
-<audio id="main-audio"></audio>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
-
