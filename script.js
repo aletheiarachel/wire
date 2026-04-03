@@ -1,3 +1,4 @@
+let hasPassedMoodGate = false;
 const launcherScreen = document.getElementById('launcherScreen');
 const appScreen = document.getElementById('appScreen');
 const enterAppBtn = document.getElementById('enterAppBtn');
@@ -57,23 +58,36 @@ const musicPlaybackOrder = [
 ];
 
 const moodPlaylists = {
-  electronic: ['sh-melukis', 'sh-try', 'sh-hideaway'],
-  chill: ['sh-alleen', 'sh-u', 'jz-aku'],
-  'workout-a': ['sh-fine', 'sh-sike', 'jz-buku'],
-  'workout-b': ['sh-ever', 'sh-fool', 'jz-apakah'],
-  'pop-a': ['jz-buku', 'jz-aku', 'sh-alleen'],
-  'pop-b': ['jz-apakah', 'sh-try', 'sh-u'],
-  'pop-c': ['sh-melukis', 'jz-buku', 'sh-ever']
+  chill: ['sh-alleen', 'sh-u', 'sh-hideaway'],
+  'get-up': ['jz-aku', 'sh-ever', 'sh-try'],
+  rage: ['jz-apakah', 'sh-sike', 'sh-fool'],
+  'feeling-blue': ['sh-melukis', 'sh-alleen', 'sh-hideaway']
 };
 
 const moodRecommendations = {
-  excited: 'jz-aku',
-  sensitive: 'sh-melukis',
-  stressed: 'sh-fine',
-  bored: 'sh-u',
-  angry: 'jz-apakah',
-  hurt: 'sh-alleen'
+  excited: ['jz-aku', 'jz-buku', 'sh-try', 'sh-ever'],
+  sensitive: ['sh-melukis', 'sh-alleen', 'sh-hideaway'],
+  stressed: ['sh-fine', 'sh-sike', 'jz-apakah'],
+  bored: ['sh-u', 'sh-ever', 'jz-aku'],
+  angry: ['jz-apakah', 'sh-sike', 'sh-fool'],
+  hurt: ['sh-alleen', 'sh-melukis', 'sh-hideaway']
 };
+const lastMoodPick = {};
+
+function getRandomMoodTrack(moodName) {
+  const moodTracks = moodRecommendations[moodName] || [];
+  if (!moodTracks.length) return null;
+  if (moodTracks.length === 1) return moodTracks[0];
+
+  let picked = null;
+  do {
+    const randomIndex = Math.floor(Math.random() * moodTracks.length);
+    picked = moodTracks[randomIndex];
+  } while (picked === lastMoodPick[moodName]);
+
+  lastMoodPick[moodName] = picked;
+  return picked;
+}
 
 function qs(selector, scope = document) {
   return scope.querySelector(selector);
@@ -129,6 +143,28 @@ function resetProgressUI() {
   if (progressFill) progressFill.style.width = '0%';
   if (currentTime) currentTime.textContent = '0:00';
   if (durationTime) durationTime.textContent = '0:00';
+}
+
+function setMoodFullscreen(isFullscreen) {
+  const sidebar = document.querySelector('.sidebar');
+  const content = document.querySelector('.content');
+  const layout = document.querySelector('.layout');
+  const logoBar = document.querySelector('.logo-bar');
+  const nowPlaying = document.querySelector('.now-playing');
+
+  if (isFullscreen) {
+    if (sidebar) sidebar.classList.add('mood-fullscreen-hide');
+    if (layout) layout.classList.add('mood-fullscreen-layout');
+    if (content) content.classList.add('mood-fullscreen-content');
+    if (logoBar) logoBar.classList.add('mood-fullscreen-logo');
+    if (nowPlaying) nowPlaying.classList.add('mood-fullscreen-hide');
+  } else {
+    if (sidebar) sidebar.classList.remove('mood-fullscreen-hide');
+    if (layout) layout.classList.remove('mood-fullscreen-layout');
+    if (content) content.classList.remove('mood-fullscreen-content');
+    if (logoBar) logoBar.classList.remove('mood-fullscreen-logo');
+    if (nowPlaying) nowPlaying.classList.remove('mood-fullscreen-hide');
+  }
 }
 
 function updateActiveStates() {
@@ -272,13 +308,13 @@ function ensureMoodCheckRoute() {
   contentArea.appendChild(route);
 
   qsa('.mood-option', route).forEach((option) => {
-    option.addEventListener('click', () => {
-      const moodName = option.dataset.mood;
-      const trackKey = moodRecommendations[moodName];
-      openMoodResult(trackKey);
-    });
+  option.addEventListener('click', () => {
+    const moodName = option.dataset.mood;
+    const trackKey = getRandomMoodTrack(moodName);
+    if (!trackKey) return;
+    openMoodResult(trackKey);
   });
-
+});
   return route;
 }
 
@@ -307,13 +343,13 @@ function ensureMoodResultRoute() {
   contentArea.appendChild(route);
 
   const btn = qs('#continueToMusicBtn', route);
-  if (btn) {
-    btn.addEventListener('click', () => {
-      showRoute('music');
-    });
-  }
-
-  return route;
+if (btn) {
+  btn.addEventListener('click', () => {
+    hasPassedMoodGate = true;
+    setMoodFullscreen(false);
+    showRoute('music');
+  });
+}
 }
 
 function ensurePlaylistDetailRoute() {
@@ -335,11 +371,11 @@ function ensurePlaylistDetailRoute() {
       </div>
 
       <div class="playlist-table-head">
-  <span>#</span>
-  <span>Name Song</span>
-  <span>Artist</span>
-  <span>Time</span>
-</div>
+        <span>#</span>
+        <span>Name Song</span>
+        <span>Artist</span>
+        <span>Time</span>
+      </div>
 
       <div class="playlist-song-list" id="playlistSongList"></div>
     </div>
@@ -423,7 +459,7 @@ function ensureSendMessagesMenu() {
     showRoute('messages');
   });
 }
-
+hasPassedMoodGate = true;
 function openMoodResult(trackKey) {
   const route = ensureMoodResultRoute();
   const track = musicTracks[trackKey];
@@ -438,11 +474,15 @@ function openMoodResult(trackKey) {
 
   fillContainerWithImage(imageWrap, getTrackImageNode(trackKey));
 
+  hasPassedMoodGate = true;
+
+  setMoodFullscreen(false);
   showRoute('mood-result');
 
   playTrack(trackKey, {
     queue: [trackKey],
     moodKey: null
+    
   });
 }
 
@@ -463,13 +503,13 @@ function createPlaylistRow(trackKey, index, playlistKey) {
   if (imageNode) thumbWrap.appendChild(imageNode.cloneNode(true));
 
   row.innerHTML = `
-  <span class="playlist-song-index">${String(index + 1).padStart(2, '0')}</span>
-  <span class="playlist-song-main-text">
-    <span class="playlist-song-name">${track.title}</span>
-  </span>
-  <span class="playlist-song-artist">${track.artist}</span>
-  <span class="playlist-song-time">${getTrackDurationLabel(trackKey)}</span>
-`;
+    <span class="playlist-song-index">${String(index + 1).padStart(2, '0')}</span>
+    <span class="playlist-song-main-text">
+      <span class="playlist-song-name">${track.title}</span>
+    </span>
+    <span class="playlist-song-artist">${track.artist}</span>
+    <span class="playlist-song-time">${getTrackDurationLabel(trackKey)}</span>
+  `;
 
   const mainText = qs('.playlist-song-main-text', row);
   if (mainText) {
@@ -543,18 +583,33 @@ function showRoute(routeName) {
     );
   });
 
+  if (currentRoute === 'mood-check') {
+    setMoodFullscreen(true);
+  } else {
+    setMoodFullscreen(false);
+  }
+
   if (contentArea) contentArea.scrollTop = 0;
 }
 
 function openMoodFlow() {
+  if (hasPassedMoodGate) {
+    setMoodFullscreen(false);
+    showRoute('music');
+    return;
+  }
+
   ensureMoodCheckRoute();
+  setMoodFullscreen(true);
   showRoute('mood-check');
 }
-
 function showApp() {
   if (launcherScreen) launcherScreen.classList.add('hidden');
   if (appScreen) appScreen.classList.remove('hidden');
-  showRoute('about');
+
+  ensureMoodCheckRoute();
+  setMoodFullscreen(true);
+  showRoute('mood-check');
 }
 
 function openArtistDetail(name, imgSrc, bioText) {
@@ -660,18 +715,25 @@ if (enterAppBtn) {
   enterAppBtn.addEventListener('click', showApp);
 }
 
-qsa('.menu-link').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.route;
+function bindMenuLinks() {
+  qsa('.menu-link').forEach((btn) => {
+    if (btn.dataset.bound === 'true') return;
+    btn.dataset.bound = 'true';
 
-    if (target === 'music') {
-      openMoodFlow();
-      return;
-    }
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.route;
 
-    showRoute(target);
+      if (target === 'music') {
+        openMoodFlow();
+        return;
+      }
+
+      showRoute(target);
+    });
   });
-});
+}
+
+bindMenuLinks();
 
 playlistCards.forEach((card) => {
   card.addEventListener('click', () => {
@@ -740,6 +802,7 @@ ensureMoodResultRoute();
 ensurePlaylistDetailRoute();
 ensureMessagesRoute();
 ensureSendMessagesMenu();
+bindMenuLinks();
 
 resetProgressUI();
 syncMainPlayButton();
