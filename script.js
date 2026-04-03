@@ -1,16 +1,12 @@
-// =========================
-// DOM
-// =========================
-const pageLabel = document.getElementById('pageLabel');
 const launcherScreen = document.getElementById('launcherScreen');
 const appScreen = document.getElementById('appScreen');
 const enterAppBtn = document.getElementById('enterAppBtn');
-const menuLinks = document.querySelectorAll('.menu-link');
-const routes = document.querySelectorAll('.route');
 
+const menuLinks = document.querySelectorAll('.menu-link');
 const playlistCards = document.querySelectorAll('.playlist-card');
 const trackRows = document.querySelectorAll('.track-row');
-const trackPlayBtns = document.querySelectorAll('.track-play-btn');
+
+const contentArea = document.getElementById('contentArea') || document.querySelector('.content');
 
 const nowTitle = document.getElementById('nowTitle');
 const nowArtist = document.getElementById('nowArtist');
@@ -19,140 +15,108 @@ const playPauseBtn = document.getElementById('playPauseBtn');
 const progressFill = document.getElementById('progressFill');
 const currentTime = document.getElementById('currentTime');
 const durationTime = document.getElementById('durationTime');
+const progressTrack =
+  document.getElementById('progressTrack') ||
+  document.querySelector('.progress-track');
+const audioEl = document.getElementById('audioPlayer');
 
-// pakai 1 audio object global
-const audioEl = new Audio();
-audioEl.preload = 'metadata';
-
-// =========================
-// STATE
-// =========================
-let currentRoute = 'playlist';
+let currentRoute = 'about';
 let currentTrackKey = null;
 let currentMoodKey = null;
 let currentQueue = [];
 let isPlaying = false;
 
-let fakeProgress = 0;
-let fakeDuration = 30;
-let fakeTimer = null;
-let usingRealAudio = false;
-
-// =========================
-// PAGE TITLES
-// =========================
-const pageTitles = {
-  about: 'about wire',
-  playlist: 'mood playlist',
-  music: 'music',
-  artist: 'artist',
-  news: 'news',
-  events: 'events',
-  achievements: 'achievements',
-  contact: 'contact',
-  suggestion: 'suggestion'
-};
-
-// =========================
-// TRACK DATA
-// isi audio kalau nanti sudah punya file lagu asli
-// =========================
 const musicTracks = {
-  'sh-aileen': {
-    title: 'Aileen',
-    artist: 'Secret Hideaway',
-    coverType: 'music-track',
-    coverImage: 'assets/music/aileen.jpg',
-    audio: ''
-  },
-  'sh-melukis': {
-    title: 'Melukis Obituari',
-    artist: 'Secret Hideaway',
-    coverType: 'music-track',
-    coverImage: 'assets/music/melukis-obituari.jpg',
-    audio: ''
-  },
-  'jz-aku': {
-    title: 'Aku, Kau, dan Musik',
-    artist: 'JUZZER',
-    coverType: 'music-track',
-    coverImage: 'assets/music/aku-kau-dan-musik.jpg',
-    audio: ''
-  },
-  'jz-buku': {
-    title: 'Buku Pesta Cinta',
-    artist: 'JUZZER',
-    coverType: 'music-track',
-    coverImage: 'assets/music/buku-pesta-cinta.jpg',
-    audio: ''
-  },
-  'jz-apakah': {
-    title: 'Apakah Aku Harus Berubah Menjadi Perempuan',
-    artist: 'JUZZER',
-    coverType: 'music-track',
-    coverImage: 'assets/music/apakah-aku-harus-berubah.jpg',
-    audio: ''
-  },
-  'ar-u': {
-    title: 'U',
-    artist: 'Arteeich',
-    coverType: 'music-track',
-    coverImage: 'assets/music/u.jpg',
-    audio: ''
-  },
-  'ar-fine': {
-    title: 'Fine',
-    artist: 'Arteeich',
-    coverType: 'music-track',
-    coverImage: 'assets/music/fine.jpg',
-    audio: ''
-  },
-  'ar-ever': {
-    title: 'Ever',
-    artist: 'Arteeich',
-    coverType: 'music-track',
-    coverImage: 'assets/music/ever.jpg',
-    audio: ''
-  },
-  'tj-1': {
-    title: 'Coming Soon',
-    artist: 'The Jorts',
-    coverType: 'music-track',
-    coverImage: '',
-    audio: ''
-  }
+  'sh-alleen': { title: 'Alleen', artist: 'Secret Hideaway', audio: 'audio/alleen-demo.wav' },
+  'sh-melukis': { title: 'Melukis Obituari', artist: 'Secret Hideaway', audio: 'audio/melukis-demo.wav' },
+  'sh-try': { title: 'Try Again', artist: 'Secret Hideaway', audio: 'audio/tryagain-demo.wav' },
+  'sh-hideaway': { title: 'Hideaway', artist: 'Secret Hideaway', audio: 'audio/hideaway-demo.wav' },
+  'sh-ever': { title: 'Ever', artist: 'Arteeich', audio: 'audio/ever-demo.wav' },
+  'sh-u': { title: 'U', artist: 'Arteeich', audio: 'audio/u-demo.wav' },
+  'sh-sike': { title: 'Sike', artist: 'Arteeich', audio: 'audio/sike-demo.wav' },
+  'sh-fool': { title: 'Fool', artist: 'Arteeich', audio: 'audio/fool-demo.wav' },
+  'sh-fine': { title: 'Fine', artist: 'Arteeich', audio: 'audio/fine-demo.wav' },
+  'jz-aku': { title: 'Aku, Kau, dan Musik', artist: 'JUZZER', audio: 'audio/akukaudanmusik-demo.wav' },
+  'jz-buku': { title: 'Buku Pesta Cinta', artist: 'JUZZER', audio: 'audio/bukupestacinta-demo.wav' },
+  'jz-apakah': { title: 'Apakah Aku Harus Berubah Menjadi Perempuan', artist: 'JUZZER', audio: 'audio/apakah-demo.wav' }
 };
 
-// urutan normal kalau user klik dari halaman music
 const musicPlaybackOrder = [
-  'sh-aileen',
+  'sh-alleen',
   'sh-melukis',
+  'sh-try',
+  'sh-hideaway',
+  'sh-ever',
+  'sh-u',
+  'sh-sike',
+  'sh-fool',
+  'sh-fine',
   'jz-aku',
   'jz-buku',
-  'jz-apakah',
-  'ar-u',
-  'ar-fine',
-  'ar-ever'
+  'jz-apakah'
 ];
 
-// mood -> playlist lagu contoh
 const moodPlaylists = {
-  electronic: ['sh-aileen', 'sh-melukis'],
-  chill: ['jz-aku', 'sh-aileen'],
-  'workout-a': ['ar-fine', 'ar-ever'],
-  'workout-b': ['ar-ever', 'ar-u'],
-  'pop-a': ['jz-buku', 'jz-apakah'],
-  'pop-b': ['jz-apakah', 'jz-buku'],
-  'pop-c': ['sh-melukis', 'jz-buku']
+  electronic: ['sh-melukis', 'sh-try', 'sh-hideaway'],
+  chill: ['sh-alleen', 'sh-u', 'jz-aku'],
+  'workout-a': ['sh-fine', 'sh-sike', 'jz-buku'],
+  'workout-b': ['sh-ever', 'sh-fool', 'jz-apakah'],
+  'pop-a': ['jz-buku', 'jz-aku', 'sh-alleen'],
+  'pop-b': ['jz-apakah', 'sh-try', 'sh-u'],
+  'pop-c': ['sh-melukis', 'jz-buku', 'sh-ever']
 };
 
-// =========================
-// HELPERS
-// =========================
+const moodRecommendations = {
+  excited: 'jz-aku',
+  sensitive: 'sh-melukis',
+  stressed: 'sh-fine',
+  bored: 'sh-u',
+  angry: 'jz-apakah',
+  hurt: 'sh-alleen'
+};
+
+function qs(selector, scope = document) {
+  return scope.querySelector(selector);
+}
+
+function qsa(selector, scope = document) {
+  return Array.from(scope.querySelectorAll(selector));
+}
+
 function formatTime(sec) {
-  const m = Math.floor(sec / 60);
-  const s = String(sec % 60).padStart(2, '0');
+  const m = Math.floor(sec / 60) || 0;
+  const s = String(Math.floor(sec % 60) || 0).padStart(2, '0');
   return `${m}:${s}`;
+}
+
+function getRoutes() {
+  return qsa('.route');
+}
+
+function getTrackImageNode(trackKey) {
+  const img = qs(`.track-row[data-track="${trackKey}"] img`);
+  return img ? img.cloneNode(true) : null;
+}
+
+function getPlaylistImageNode(playlistKey) {
+  const img = qs(`.playlist-card[data-track="${playlistKey}"] .mood-bg`);
+  return img ? img.cloneNode(true) : null;
+}
+
+function fillContainerWithImage(container, imageNode, className = '') {
+  if (!container) return;
+  container.innerHTML = '';
+  if (!imageNode) return;
+
+  const clone = imageNode.cloneNode(true);
+  if (className) clone.classList.add(className);
+  container.appendChild(clone);
+}
+
+function getTrackDurationLabel(trackKey) {
+  const track = musicTracks[trackKey];
+  if (!track || !track.audio) return '3:00';
+  return track.audio.toLowerCase().includes('demo') ? '0:05' : '3:00';
 }
 
 function syncMainPlayButton() {
@@ -167,61 +131,23 @@ function resetProgressUI() {
   if (durationTime) durationTime.textContent = '0:00';
 }
 
-function stopFakeProgress() {
-  if (fakeTimer) {
-    clearInterval(fakeTimer);
-    fakeTimer = null;
-  }
-}
-
-function stopRealAudio() {
-  audioEl.pause();
-  audioEl.removeAttribute('src');
-  audioEl.load();
-}
-
-function stopAllPlayback() {
-  stopFakeProgress();
-  stopRealAudio();
-  usingRealAudio = false;
-}
-
-function renderNowCover(track) {
-  if (!nowCoverShape) return;
-  if (!track) return;
-
-  if (track.coverType === 'music-track' && track.coverImage) {
-    nowCoverShape.className = 'cover-shape music-track';
-    nowCoverShape.innerHTML = `<img src="${track.coverImage}" alt="${track.title}" style="width:100%;height:100%;object-fit:cover;display:block;">`;
-    return;
-  }
-
-  nowCoverShape.className = 'cover-shape ' + track.coverType;
-  nowCoverShape.innerHTML = '';
-}
-
 function updateActiveStates() {
-  // highlight mood cards
   playlistCards.forEach((card) => {
-    const isMoodActive = card.dataset.track === currentMoodKey;
-    card.classList.toggle('is-playing', isMoodActive);
-
-    const badge = card.querySelector('.play-badge');
-    if (badge) {
-      badge.textContent = isMoodActive && isPlaying ? 'Playing' : 'Play';
-    }
+    card.classList.toggle('is-playing', card.dataset.track === currentMoodKey && isPlaying);
   });
 
-  // highlight music rows
   trackRows.forEach((row) => {
-    const isTrackActive = row.dataset.track === currentTrackKey;
-    row.classList.toggle('is-playing', isTrackActive);
-
-    const btn = row.querySelector('.track-play-btn');
-    if (btn) {
-      btn.textContent = isTrackActive && isPlaying ? '❚❚' : '▶';
-    }
+    row.classList.toggle('is-playing', row.dataset.track === currentTrackKey && isPlaying);
   });
+
+  qsa('.playlist-song-row').forEach((row) => {
+    row.classList.toggle('is-playing', row.dataset.track === currentTrackKey && isPlaying);
+  });
+}
+
+function renderNowCover(trackKey) {
+  if (!nowCoverShape) return;
+  fillContainerWithImage(nowCoverShape, getTrackImageNode(trackKey), 'cover-image');
 }
 
 function setNowPlaying(trackKey) {
@@ -229,42 +155,10 @@ function setNowPlaying(trackKey) {
   if (!track) return;
 
   currentTrackKey = trackKey;
-
   if (nowTitle) nowTitle.textContent = track.title;
   if (nowArtist) nowArtist.textContent = track.artist;
-
-  renderNowCover(track);
+  renderNowCover(trackKey);
   updateActiveStates();
-}
-
-function startFakeProgress(duration = 30) {
-  stopFakeProgress();
-
-  fakeProgress = 0;
-  fakeDuration = duration;
-
-  if (progressFill) progressFill.style.width = '0%';
-  if (currentTime) currentTime.textContent = '0:00';
-  if (durationTime) durationTime.textContent = formatTime(fakeDuration);
-
-  fakeTimer = setInterval(() => {
-    if (!isPlaying) return;
-
-    fakeProgress += 1;
-
-    if (fakeProgress >= fakeDuration) {
-      playNextTrack();
-      return;
-    }
-
-    if (progressFill) {
-      progressFill.style.width = `${(fakeProgress / fakeDuration) * 100}%`;
-    }
-
-    if (currentTime) {
-      currentTime.textContent = formatTime(fakeProgress);
-    }
-  }, 1000);
 }
 
 function getQueueIndex() {
@@ -273,13 +167,10 @@ function getQueueIndex() {
 
 function playNextTrack() {
   if (!currentQueue.length) return;
-
   const currentIndex = getQueueIndex();
-  const nextIndex = currentIndex >= 0
-    ? (currentIndex + 1) % currentQueue.length
-    : 0;
-
+  const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % currentQueue.length : 0;
   const nextTrackKey = currentQueue[nextIndex];
+
   playTrack(nextTrackKey, {
     queue: currentQueue,
     moodKey: currentMoodKey
@@ -288,45 +179,29 @@ function playNextTrack() {
 
 function playTrack(trackKey, options = {}) {
   const track = musicTracks[trackKey];
-  if (!track) return;
+  if (!track || !audioEl) return;
 
-  const queue = Array.isArray(options.queue) && options.queue.length
-    ? options.queue
-    : musicPlaybackOrder;
+  currentQueue =
+    Array.isArray(options.queue) && options.queue.length
+      ? [...options.queue]
+      : [...musicPlaybackOrder];
 
-  currentQueue = [...queue];
   currentMoodKey = options.moodKey ?? null;
 
-  stopAllPlayback();
-  resetProgressUI();
+  setNowPlaying(trackKey);
+
+  audioEl.pause();
+  audioEl.src = track.audio || '';
+  audioEl.load();
 
   isPlaying = true;
-  setNowPlaying(trackKey);
   syncMainPlayButton();
-
-  if (track.audio) {
-    usingRealAudio = true;
-    audioEl.src = track.audio;
-    audioEl.play().catch(() => {
-      isPlaying = false;
-      syncMainPlayButton();
-      updateActiveStates();
-    });
-  } else {
-    usingRealAudio = false;
-    startFakeProgress(30);
-  }
-
   updateActiveStates();
-}
 
-function playFromMood(moodKey) {
-  const moodQueue = moodPlaylists[moodKey];
-  if (!moodQueue || !moodQueue.length) return;
-
-  playTrack(moodQueue[0], {
-    queue: moodQueue,
-    moodKey: moodKey
+  audioEl.play().catch(() => {
+    isPlaying = false;
+    syncMainPlayButton();
+    updateActiveStates();
   });
 }
 
@@ -338,78 +213,400 @@ function playFromMusic(trackKey) {
 }
 
 function togglePlayPause() {
-  if (!currentTrackKey) return;
+  if (!audioEl || !currentTrackKey) return;
 
-  isPlaying = !isPlaying;
-  syncMainPlayButton();
-
-  if (usingRealAudio) {
-    if (isPlaying) {
-      audioEl.play().catch(() => {
-        isPlaying = false;
-        syncMainPlayButton();
-      });
-    } else {
-      audioEl.pause();
-    }
+  if (audioEl.paused) {
+    audioEl.play().then(() => {
+      isPlaying = true;
+      syncMainPlayButton();
+      updateActiveStates();
+    }).catch(() => {});
+  } else {
+    audioEl.pause();
+    isPlaying = false;
+    syncMainPlayButton();
+    updateActiveStates();
   }
-
-  updateActiveStates();
 }
 
-// =========================
-// NAVIGATION
-// =========================
-function showApp() {
-  launcherScreen.classList.add('hidden');
-  appScreen.classList.remove('hidden');
-  showRoute('about');
+function ensureMoodCheckRoute() {
+  let route = qs('.route[data-route="mood-check"]');
+  if (route) return route;
+
+  route = document.createElement('section');
+  route.className = 'route';
+  route.setAttribute('data-route', 'mood-check');
+
+  route.innerHTML = `
+    <div class="mood-check-wrap">
+      <h2 class="mood-check-title">How are you really feeling today?</h2>
+      <div class="mood-grid">
+        <button class="mood-option excited" type="button" data-mood="excited">
+          <div class="mood-face">><</div>
+          <div class="mood-label">Excited</div>
+        </button>
+        <button class="mood-option sensitive" type="button" data-mood="sensitive">
+          <div class="mood-face">◔◔</div>
+          <div class="mood-label">Sensitive</div>
+        </button>
+        <button class="mood-option stressed" type="button" data-mood="stressed">
+          <div class="mood-face">◎◎</div>
+          <div class="mood-label">Stressed</div>
+        </button>
+        <button class="mood-option bored" type="button" data-mood="bored">
+          <div class="mood-face">◡◡</div>
+          <div class="mood-label">Bored</div>
+        </button>
+        <button class="mood-option angry" type="button" data-mood="angry">
+          <div class="mood-face">一 一</div>
+          <div class="mood-label">Angry</div>
+        </button>
+        <button class="mood-option hurt" type="button" data-mood="hurt">
+          <div class="mood-face">◠◠</div>
+          <div class="mood-label">Hurt</div>
+        </button>
+      </div>
+    </div>
+  `;
+
+  contentArea.appendChild(route);
+
+  qsa('.mood-option', route).forEach((option) => {
+    option.addEventListener('click', () => {
+      const moodName = option.dataset.mood;
+      const trackKey = moodRecommendations[moodName];
+      openMoodResult(trackKey);
+    });
+  });
+
+  return route;
+}
+
+function ensureMoodResultRoute() {
+  let route = qs('.route[data-route="mood-result"]');
+  if (route) return route;
+
+  route = document.createElement('section');
+  route.className = 'route';
+  route.setAttribute('data-route', 'mood-result');
+
+  route.innerHTML = `
+    <div class="mood-result-wrap">
+      <div class="mood-result-headline">Song that match your mood right now is...</div>
+      <div class="mood-result-title" id="moodResultTitle"></div>
+      <div class="mood-result-artist" id="moodResultArtist"></div>
+
+      <div class="mood-result-player">
+        <div class="mood-result-image-wrap" id="moodResultImageWrap"></div>
+      </div>
+
+      <button class="continue-music-btn" type="button" id="continueToMusicBtn">Open Music</button>
+    </div>
+  `;
+
+  contentArea.appendChild(route);
+
+  const btn = qs('#continueToMusicBtn', route);
+  if (btn) {
+    btn.addEventListener('click', () => {
+      showRoute('music');
+    });
+  }
+
+  return route;
+}
+
+function ensurePlaylistDetailRoute() {
+  let route = qs('.route[data-route="playlist-detail"]');
+  if (route) return route;
+
+  route = document.createElement('section');
+  route.className = 'route';
+  route.setAttribute('data-route', 'playlist-detail');
+
+  route.innerHTML = `
+    <div class="playlist-detail-wrap">
+      <button class="playlist-detail-back" type="button" id="playlistDetailBack">← Back</button>
+
+      <div class="playlist-detail-hero">
+        <div class="playlist-detail-hero-image" id="playlistHeroImageWrap"></div>
+        <div class="playlist-detail-hero-overlay"></div>
+        <div class="playlist-detail-hero-title" id="playlistHeroTitle">Playlist</div>
+      </div>
+
+      <div class="playlist-table-head">
+  <span>#</span>
+  <span>Name Song</span>
+  <span>Artist</span>
+  <span>Time</span>
+</div>
+
+      <div class="playlist-song-list" id="playlistSongList"></div>
+    </div>
+  `;
+
+  contentArea.appendChild(route);
+
+  const backBtn = qs('#playlistDetailBack', route);
+  if (backBtn) {
+    backBtn.addEventListener('click', () => {
+      showRoute('playlist');
+    });
+  }
+
+  return route;
+}
+
+function ensureMessagesRoute() {
+  let route = qs('.route[data-route="messages"]');
+  if (route) return route;
+
+  route = document.createElement('section');
+  route.className = 'route';
+  route.setAttribute('data-route', 'messages');
+
+  route.innerHTML = `
+    <div class="message-form-wrap" id="messageFormWrap">
+      <div class="contact-heading">Send Messages</div>
+      <div class="form-group">
+        <label class="form-label">To:</label>
+        <input class="form-input" type="text" placeholder="write recipient name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Choose songs:</label>
+        <input class="form-input" type="text" placeholder="write song title">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Send messages to them:</label>
+        <textarea class="form-input form-textarea" placeholder="write your message"></textarea>
+      </div>
+      <button class="form-submit" type="button" id="messageSubmit">Submit</button>
+    </div>
+
+    <div class="form-thanks hidden" id="messageThanks">
+      <div class="thanks-title">Message sent</div>
+      <div class="thanks-sub">Your message has been submitted.</div>
+    </div>
+  `;
+
+  contentArea.appendChild(route);
+
+  const submit = qs('#messageSubmit', route);
+  const thanks = qs('#messageThanks', route);
+  const formWrap = qs('#messageFormWrap', route);
+
+  if (submit) {
+    submit.addEventListener('click', () => {
+      if (formWrap) formWrap.classList.add('hidden');
+      if (thanks) thanks.classList.remove('hidden');
+    });
+  }
+
+  return route;
+}
+
+function ensureSendMessagesMenu() {
+  if (qs('.menu-link[data-route="messages"]')) return;
+
+  const suggestionBtn = qs('.menu-link[data-route="suggestion"]');
+  if (!suggestionBtn || !suggestionBtn.parentElement) return;
+
+  const btn = document.createElement('button');
+  btn.className = 'menu-link';
+  btn.type = 'button';
+  btn.dataset.route = 'messages';
+  btn.textContent = 'Send Messages';
+
+  suggestionBtn.insertAdjacentElement('afterend', btn);
+
+  btn.addEventListener('click', () => {
+    showRoute('messages');
+  });
+}
+
+function openMoodResult(trackKey) {
+  const route = ensureMoodResultRoute();
+  const track = musicTracks[trackKey];
+  if (!track) return;
+
+  const titleEl = qs('#moodResultTitle', route);
+  const artistEl = qs('#moodResultArtist', route);
+  const imageWrap = qs('#moodResultImageWrap', route);
+
+  if (titleEl) titleEl.textContent = track.title;
+  if (artistEl) artistEl.textContent = track.artist;
+
+  fillContainerWithImage(imageWrap, getTrackImageNode(trackKey));
+
+  showRoute('mood-result');
+
+  playTrack(trackKey, {
+    queue: [trackKey],
+    moodKey: null
+  });
+}
+
+function createPlaylistRow(trackKey, index, playlistKey) {
+  const track = musicTracks[trackKey];
+  if (!track) return null;
+
+  const row = document.createElement('button');
+  row.className = 'playlist-song-row';
+  row.type = 'button';
+  row.dataset.track = trackKey;
+  row.dataset.playlist = playlistKey;
+
+  const thumbWrap = document.createElement('span');
+  thumbWrap.className = 'playlist-song-thumb';
+
+  const imageNode = getTrackImageNode(trackKey);
+  if (imageNode) thumbWrap.appendChild(imageNode.cloneNode(true));
+
+  row.innerHTML = `
+  <span class="playlist-song-index">${String(index + 1).padStart(2, '0')}</span>
+  <span class="playlist-song-main-text">
+    <span class="playlist-song-name">${track.title}</span>
+  </span>
+  <span class="playlist-song-artist">${track.artist}</span>
+  <span class="playlist-song-time">${getTrackDurationLabel(trackKey)}</span>
+`;
+
+  const mainText = qs('.playlist-song-main-text', row);
+  if (mainText) {
+    const mainWrap = document.createElement('span');
+    mainWrap.className = 'playlist-song-main';
+    mainWrap.appendChild(thumbWrap);
+    mainWrap.appendChild(mainText.cloneNode(true));
+    mainText.replaceWith(mainWrap);
+  }
+
+  row.addEventListener('click', () => {
+    const queue = moodPlaylists[playlistKey] || [trackKey];
+    playTrack(trackKey, {
+      queue,
+      moodKey: playlistKey
+    });
+    updateActiveStates();
+  });
+
+  return row;
+}
+
+function openPlaylistDetail(playlistKey) {
+  const route = ensurePlaylistDetailRoute();
+  const heroWrap = qs('#playlistHeroImageWrap', route);
+  const heroTitle = qs('#playlistHeroTitle', route);
+  const songList = qs('#playlistSongList', route);
+
+  const cardTitleNode = qs(`.playlist-card[data-track="${playlistKey}"] .card-title`);
+  const heroImageNode = getPlaylistImageNode(playlistKey);
+  const tracks = moodPlaylists[playlistKey] || [];
+
+  if (heroTitle) {
+    heroTitle.textContent = cardTitleNode ? cardTitleNode.textContent.trim() : 'Playlist';
+  }
+
+  fillContainerWithImage(heroWrap, heroImageNode);
+
+  if (songList) {
+    songList.innerHTML = '';
+    tracks.forEach((trackKey, index) => {
+      const row = createPlaylistRow(trackKey, index, playlistKey);
+      if (row) songList.appendChild(row);
+    });
+  }
+
+  showRoute('playlist-detail');
 }
 
 function showRoute(routeName) {
-  currentRoute = pageTitles[routeName] ? routeName : 'playlist';
+  currentRoute = routeName || 'about';
 
-  if (pageLabel) {
-    pageLabel.textContent = pageTitles[currentRoute];
-  }
-
-  routes.forEach((section) => {
-    section.classList.toggle('active', section.dataset.route === currentRoute);
+  getRoutes().forEach((route) => {
+    route.classList.toggle('active', route.dataset.route === currentRoute);
   });
 
-  menuLinks.forEach((button) => {
-    button.classList.toggle('active', button.dataset.route === currentRoute);
+  qsa('.menu-link').forEach((button) => {
+    const route = button.dataset.route;
+
+    const isMusicFlow =
+      route === 'music' &&
+      (currentRoute === 'mood-check' || currentRoute === 'mood-result');
+
+    const isPlaylistFlow =
+      route === 'playlist' &&
+      currentRoute === 'playlist-detail';
+
+    button.classList.toggle(
+      'active',
+      route === currentRoute || isMusicFlow || isPlaylistFlow
+    );
   });
+
+  if (contentArea) contentArea.scrollTop = 0;
 }
 
-// =========================
-// EVENTS TABS
-// =========================
-const eventsTabs = document.querySelectorAll('.events-tab');
-const eventsPanels = document.querySelectorAll('.events-panel');
+function openMoodFlow() {
+  ensureMoodCheckRoute();
+  showRoute('mood-check');
+}
+
+function showApp() {
+  if (launcherScreen) launcherScreen.classList.add('hidden');
+  if (appScreen) appScreen.classList.remove('hidden');
+  showRoute('about');
+}
+
+function openArtistDetail(name, imgSrc, bioText) {
+  const artistListContainer = document.getElementById('artistListContainer');
+  const artistDetailContainer = document.getElementById('artistDetailContainer');
+  const displayArtistName = document.getElementById('displayArtistName');
+  const displayArtistImg = document.getElementById('displayArtistImg');
+  const displayArtistBio = document.getElementById('displayArtistBio');
+
+  if (artistListContainer) artistListContainer.classList.add('hidden');
+  if (artistDetailContainer) artistDetailContainer.classList.remove('hidden');
+  if (displayArtistName) displayArtistName.innerText = name;
+  if (displayArtistImg) displayArtistImg.src = imgSrc;
+  if (displayArtistBio) displayArtistBio.innerHTML = bioText;
+
+  if (contentArea) contentArea.scrollTop = 0;
+}
+window.openArtistDetail = openArtistDetail;
+
+function closeArtistDetail() {
+  const artistListContainer = document.getElementById('artistListContainer');
+  const artistDetailContainer = document.getElementById('artistDetailContainer');
+
+  if (artistListContainer) artistListContainer.classList.remove('hidden');
+  if (artistDetailContainer) artistDetailContainer.classList.add('hidden');
+}
+window.closeArtistDetail = closeArtistDetail;
+
+function navigateTo(route) {
+  if (route === 'music') {
+    openMoodFlow();
+    return;
+  }
+  showRoute(route);
+}
+window.navigateTo = navigateTo;
+
+const eventsTabs = qsa('.events-tab');
+const eventsPanels = qsa('.events-panel');
 
 eventsTabs.forEach((tab) => {
   tab.addEventListener('click', () => {
     const target = tab.dataset.tab;
-
-    // Hilangkan semua class active
-    eventsTabs.forEach(t => t.classList.remove('active'));
-    eventsPanels.forEach(p => p.classList.remove('active'));
-
-    // Tambahkan active ke yang diklik
+    eventsTabs.forEach((t) => t.classList.remove('active'));
+    eventsPanels.forEach((p) => p.classList.remove('active'));
     tab.classList.add('active');
-    
-    // Cari panel berdasarkan id atau data-panel
+
     const panel = document.getElementById(target);
-    if (panel) {
-      panel.classList.add('active');
-    }
+    if (panel) panel.classList.add('active');
   });
 });
 
-// =========================
-// NEWS — list → detail
-// =========================
 const newsList = document.getElementById('newsList');
 const articleDetail = document.getElementById('articleDetail');
 const articleBack = document.getElementById('articleBack');
@@ -421,13 +618,12 @@ const articlesData = {
   2: { title: 'Article', image: 'assets/news/article2.jpg' },
   3: { title: 'Article', image: 'assets/news/article3.jpg' },
   4: { title: 'Article', image: 'assets/news/article4.jpg' },
-  5: { title: 'Article', image: 'assets/news/article5.jpg' },
+  5: { title: 'Article', image: 'assets/news/article5.jpg' }
 };
 
-document.querySelectorAll('.news-row').forEach((row) => {
+qsa('.news-row').forEach((row) => {
   row.addEventListener('click', () => {
-    const id = row.dataset.article;
-    const data = articlesData[id];
+    const data = articlesData[row.dataset.article];
     if (!data) return;
 
     if (articleTitleEl) articleTitleEl.textContent = data.title;
@@ -438,6 +634,7 @@ document.querySelectorAll('.news-row').forEach((row) => {
 
     if (newsList) newsList.classList.add('hidden');
     if (articleDetail) articleDetail.classList.remove('hidden');
+    if (contentArea) contentArea.scrollTop = 0;
   });
 });
 
@@ -448,13 +645,6 @@ if (articleBack) {
   });
 }
 
-// =========================
-// CONTACT — social links only, no form
-// =========================
-
-// =========================
-// SUGGESTION FORM
-// =========================
 const suggestionSubmit = document.getElementById('suggestionSubmit');
 const suggestionThanks = document.getElementById('suggestionThanks');
 const suggestionFormWrap = document.getElementById('suggestionForm');
@@ -466,60 +656,26 @@ if (suggestionSubmit) {
   });
 }
 
-// =========================
-// AUDIO EVENTS
-// =========================
-audioEl.addEventListener('loadedmetadata', () => {
-  if (!isFinite(audioEl.duration)) return;
-  if (durationTime) durationTime.textContent = formatTime(Math.floor(audioEl.duration));
-});
-
-audioEl.addEventListener('timeupdate', () => {
-  if (!audioEl.duration) return;
-
-  const percent = (audioEl.currentTime / audioEl.duration) * 100;
-
-  if (progressFill) {
-    progressFill.style.width = `${percent}%`;
-  }
-
-  if (currentTime) {
-    currentTime.textContent = formatTime(Math.floor(audioEl.currentTime));
-  }
-});
-
-audioEl.addEventListener('ended', () => {
-  playNextTrack();
-});
-
-audioEl.addEventListener('pause', () => {
-  if (!audioEl.ended && usingRealAudio) {
-    syncMainPlayButton();
-    updateActiveStates();
-  }
-});
-
-audioEl.addEventListener('play', () => {
-  syncMainPlayButton();
-  updateActiveStates();
-});
-
-// =========================
-// EVENT LISTENERS
-// =========================
 if (enterAppBtn) {
   enterAppBtn.addEventListener('click', showApp);
 }
 
-menuLinks.forEach((btn) => {
+qsa('.menu-link').forEach((btn) => {
   btn.addEventListener('click', () => {
-    showRoute(btn.dataset.route);
+    const target = btn.dataset.route;
+
+    if (target === 'music') {
+      openMoodFlow();
+      return;
+    }
+
+    showRoute(target);
   });
 });
 
 playlistCards.forEach((card) => {
   card.addEventListener('click', () => {
-    playFromMood(card.dataset.track);
+    openPlaylistDetail(card.dataset.track);
   });
 });
 
@@ -529,42 +685,63 @@ trackRows.forEach((row) => {
   });
 });
 
-trackPlayBtns.forEach((btn) => {
-  btn.addEventListener('click', (event) => {
-    event.stopPropagation();
-    const parentRow = btn.closest('.track-row');
-    if (!parentRow) return;
-    playFromMusic(parentRow.dataset.track);
-  });
-});
-
 if (playPauseBtn) {
   playPauseBtn.addEventListener('click', togglePlayPause);
 }
 
-// =========================
-// INIT
-// =========================
+if (progressTrack) {
+  progressTrack.addEventListener('click', (event) => {
+    if (!audioEl || !audioEl.duration) return;
+
+    const rect = progressTrack.getBoundingClientRect();
+    const ratio = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
+    audioEl.currentTime = audioEl.duration * ratio;
+  });
+}
+
+if (audioEl) {
+  audioEl.addEventListener('loadedmetadata', () => {
+    if (!isFinite(audioEl.duration)) return;
+    if (durationTime) durationTime.textContent = formatTime(audioEl.duration);
+  });
+
+  audioEl.addEventListener('timeupdate', () => {
+    if (!audioEl.duration) return;
+    const percent = (audioEl.currentTime / audioEl.duration) * 100;
+    if (progressFill) progressFill.style.width = `${percent}%`;
+    if (currentTime) currentTime.textContent = formatTime(audioEl.currentTime);
+  });
+
+  audioEl.addEventListener('ended', () => {
+    playNextTrack();
+  });
+
+  audioEl.addEventListener('play', () => {
+    isPlaying = true;
+    syncMainPlayButton();
+    updateActiveStates();
+  });
+
+  audioEl.addEventListener('pause', () => {
+    isPlaying = false;
+    syncMainPlayButton();
+    updateActiveStates();
+  });
+
+  audioEl.addEventListener('error', () => {
+    isPlaying = false;
+    syncMainPlayButton();
+    updateActiveStates();
+  });
+}
+
+ensureMoodCheckRoute();
+ensureMoodResultRoute();
+ensurePlaylistDetailRoute();
+ensureMessagesRoute();
+ensureSendMessagesMenu();
+
 resetProgressUI();
 syncMainPlayButton();
 updateActiveStates();
-
-function openArtistDetail(name, imgSrc, bioText) {
-    document.getElementById('artistListContainer').classList.add('hidden');
-    document.getElementById('artistDetailContainer').classList.remove('hidden');
-
-    document.getElementById('displayArtistName').innerText = name;
-    document.getElementById('displayArtistImg').src = imgSrc;
-    // Pakai innerHTML supaya <br> terbaca jadi paragraf
-    document.getElementById('displayArtistBio').innerHTML = bioText;
-
-    // Otomatis scroll ke atas pas buka detail
-    window.scrollTo(0, 0);
-}
-
-function closeArtistDetail() {
-    document.getElementById('artistListContainer').classList.remove('hidden');
-    document.getElementById('artistDetailContainer').classList.add('hidden');
-}
-
-
+showRoute('about');
