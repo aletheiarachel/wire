@@ -497,17 +497,48 @@ button, input, textarea, select { font: inherit; }
   text-decoration: none;
   color: var(--ink);
 }
-.social-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; }
-.social-icon svg { width: 18px; height: 18px; }
-.social-icon--instagram { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-.social-icon--x { background: #000; }
-.social-icon--gmail { background: #EA4335; }
-.social-icon--tiktok { background: #010101; }
-.social-icon--youtube { background: #FF0000; }
-.social-icon--spotify { background: #1DB954; }
-.social-platform { font-size: 11px; font-weight: 700; }
-.social-handle { font-size: 9px; color: var(--muted); margin-top: 1px; }
-.social-arrow { font-size: 16px; color: var(--muted); }
+.social-icon { 
+  width: 36px; 
+  height: 36px; 
+  border-radius: 10px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: #fff; 
+  background: #004d00; /* Warna hijau dasar untuk semua icon */
+}
+
+.social-icon svg { 
+  width: 18px; 
+  height: 18px; 
+}
+
+/* Menghapus gradasi & merah, ganti ke Hijau WIRE */
+.social-icon--instagram { 
+  background: #004d00 !important; 
+}
+
+.social-icon--gmail { 
+  background: #004d00 !important; 
+}
+
+.social-platform { 
+  font-size: 11px; 
+  font-weight: 700; 
+  font-family: 'Poppins', sans-serif;
+}
+
+.social-handle { 
+  font-size: 9px; 
+  color: var(--muted); 
+  margin-top: 1px; 
+  font-family: 'Poppins', sans-serif;
+}
+
+.social-arrow { 
+  font-size: 16px; 
+  color: var(--muted); 
+}
 
 .suggestion-wrap, .message-form-wrap {
   padding: 16px 4px 0;
@@ -1383,57 +1414,35 @@ button, input, textarea, select { font: inherit; }
   font-weight:700;
 }
 
-/* --- ACHIEVEMENTS STYLE --- */
+/* --- PAKSA UKURAN 16:9 MUNGIL --- */
 
-.achievement-container {
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0eee2; /* Warna krem khas WIRE */
-}
-
-.achievement-title {
-    font-family: 'CoolveticaCustom', sans-serif;
-    font-size: 32px;
-    color: #004d00;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-/* Card untuk Foto & Teks */
 .achievement-card {
-    width: 100%;
-    max-width: 400px; /* Biar pas di layar HP */
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+    width: 280px !important;      /* Paksa lebar jadi mungil */
+    margin: 20px auto !important; /* Tengahin kotak-nya */
+    display: block !important;
 }
 
-/* KUNCI UKURAN 16:9 */
-.achievement-banner {
-    width: 100%;
-    aspect-ratio: 16 / 9; /* Ini rahasianya biar 16:9 */
-    overflow: hidden;
-    background-color: #000;
+.achievement-image-box {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important; /* Kunci rasio landscape */
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    background-color: #000 !important;
 }
 
-.achievement-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Biar foto gak gepeng */
-    object-position: center; /* Fokus ke tengah gambar */
+.alleen-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;    /* Biar gambar gak gepeng */
+    object-position: top !important; /* Biar tulisan 'Alleen' kelihatan */
 }
 
-/* Teks di bawah foto */
-.achievement-desc {
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #333;
-    padding: 15px;
-    text-align: left;
-    line-height: 1.5;
+.achievement-caption {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 12px !important;
+    color: #57606f !important;
+    margin-top: 10px !important;
+    text-align: justify !important;
 }
