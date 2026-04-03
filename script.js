@@ -38,7 +38,11 @@ const musicTracks = {
   'sh-fine': { title: 'Fine', artist: 'Arteeich', audio: 'audio/fine-demo.wav' },
   'jz-aku': { title: 'Aku, Kau, dan Musik', artist: 'JUZZER', audio: 'audio/akukaudanmusik-demo.wav' },
   'jz-buku': { title: 'Buku Pesta Cinta', artist: 'JUZZER', audio: 'audio/bukupestacinta-demo.wav' },
-  'jz-apakah': { title: 'Apakah Aku Harus Berubah Menjadi Perempuan', artist: 'JUZZER', audio: 'audio/apakah-demo.wav' }
+  'jz-apakah': { title: 'Apakah Aku Harus Berubah Menjadi Perempuan', artist: 'JUZZER', audio: 'audio/apakah-demo.wav' },
+  'jz-asam': { title: 'Asam Manis', artist: 'JUZZER', audio: 'audio/asammanis-demo.wav'},
+  'jz-hey': { title: 'Hey Kau Gadis Nan Jauh Di Sana', artist: 'JUZZER', audio: 'audio/heykaugadisnanjauhdisana-demo.wav'},
+  'jz-malam': { title: 'Malam Yang Gulita', artist: 'JUZZER', audio: 'audio/malamyanggulita-demo.wav'},
+  'jz-romansa': { title: 'Romansa Akhir Pekan', artist: 'JUZZER', audio: 'audio/romansaakhirpekan-demo.wav'}
 };
 
 const musicPlaybackOrder = [
@@ -53,7 +57,11 @@ const musicPlaybackOrder = [
   'sh-fine',
   'jz-aku',
   'jz-buku',
-  'jz-apakah'
+  'jz-apakah',
+  'jz-asam',
+  'jz-hey',
+  'jz-malam',
+  'jz-romansa'
 ];
 
 const moodPlaylists = {
