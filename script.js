@@ -45,20 +45,26 @@ const musicTracks = {
   'sh-melukis': {
     title: 'Melukis Obituari',
     artist: 'Secret Hideaway',
-    audio: 'Melukis Obituari.mp3',
+    audio: 'melukis.mp3',
     image: 'Melukis Obituari.jpg'
   },
   'sh-try': {
     title: 'Try Again',
     artist: 'Secret Hideaway',
-    audio: 'Try Again.mp3',
+    audio: 'tryagain.mp3',
     image: 'Try Again.jpg'
   },
   'sh-hideaway': {
     title: 'Hideaway',
     artist: 'Secret Hideaway',
-    audio: 'Hideaway.mp3',
+    audio: 'hideaway.mp3',
     image: 'Hideaway.jpg'
+  },
+  'sh-firstlook': {
+    title: 'First Look',
+    artist: 'Secret Hideaway',
+    audio: 'firstlook.mp3',
+    image: 'Firstlook.jpg'
   },
   'sh-ever': {
     title: 'Ever',
@@ -997,3 +1003,4 @@ resetProgressUI();
 syncMainPlayButton();
 updateActiveStates();
 showRoute('about');
+
