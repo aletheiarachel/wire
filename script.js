@@ -45,26 +45,20 @@ const musicTracks = {
   'sh-melukis': {
     title: 'Melukis Obituari',
     artist: 'Secret Hideaway',
-    audio: 'melukis.mp3',
+    audio: 'Melukis Obituari.mp3',
     image: 'Melukis Obituari.jpg'
   },
   'sh-try': {
     title: 'Try Again',
     artist: 'Secret Hideaway',
-    audio: 'tryagain.mp3',
+    audio: 'Try Again.mp3',
     image: 'Try Again.jpg'
   },
   'sh-hideaway': {
     title: 'Hideaway',
     artist: 'Secret Hideaway',
-    audio: 'hideaway.mp3',
+    audio: 'Hideaway.mp3',
     image: 'Hideaway.jpg'
-  },
-  'sh-firstlook': {
-    title: 'First Look',
-    artist: 'Secret Hideaway',
-    audio: 'firstlook.mp3',
-    image: 'Firstlook.jpg'
   },
   'sh-ever': {
     title: 'Ever',
@@ -215,7 +209,6 @@ function getTrackDurationLabel(trackKey) {
   if (!track || !track.audio) return '3:00';
   return track.audio.toLowerCase().includes('demo') ? '0:05' : '3:00';
 }
-
 function syncMainPlayButton() {
   if (!playPauseBtn) return;
   playPauseBtn.innerHTML = isPlaying ? '&#10074;&#10074;' : '&#9654;';
@@ -519,6 +512,52 @@ function ensurePlaylistDetailRoute() {
   return route;
 }
 
+// In-memory store for submitted mixtape messages
+const mixtapeMessages = [];
+
+function buildSongOptions() {
+  return Object.entries(musicTracks).map(([key, track]) =>
+    `<option value="${key}">${track.title} — ${track.artist}</option>`
+  ).join('');
+}
+
+function renderMixtapeCards(container) {
+  container.innerHTML = '';
+  if (!mixtapeMessages.length) return;
+
+  mixtapeMessages.forEach((msg) => {
+    const card = document.createElement('div');
+    card.className = 'mixtape-message-card';
+
+    const track = msg.songKey ? musicTracks[msg.songKey] : null;
+
+    card.innerHTML = `
+      <div class="mmc-to">To: <strong>${msg.to || 'Someone'}</strong></div>
+      <div class="mmc-body">${msg.message || ''}</div>
+      ${track ? `
+        <div class="mmc-song">
+          <div class="mmc-song-art">
+            <img src="${track.image}" alt="${track.title}" onerror="this.style.display='none'">
+          </div>
+          <div class="mmc-song-info">
+            <div class="mmc-song-title">${track.title}</div>
+            <div class="mmc-song-artist">${track.artist}</div>
+          </div>
+          <div class="mmc-spotify-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <circle cx="12" cy="12" r="12" fill="#1a1a1a"/>
+              <path d="M17.9 10.9C14.7 9 9.35 8.8 6.3 9.75c-.5.15-1-.15-1.15-.6-.15-.5.15-1 .6-1.15 3.55-1.05 9.4-.85 13.1 1.35.45.25.6.85.35 1.3-.25.35-.85.5-1.3.25zm-.1 2.8c-.25.35-.7.5-1.05.25-2.7-1.65-6.8-2.15-9.95-1.15-.4.1-.85-.1-.95-.5-.1-.4.1-.85.5-.95 3.65-1.1 8.15-.55 11.25 1.35.3.15.45.65.2 1zm-1.2 2.75c-.2.3-.55.4-.85.2-2.35-1.45-5.3-1.75-8.8-.95-.35.1-.65-.15-.75-.45-.1-.35.15-.65.45-.75 3.8-.85 7.1-.5 9.7 1.1.35.15.4.55.25.85z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+      ` : ''}
+      <div class="mmc-from">— ${msg.from || 'Anonymous'}</div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
 function ensureMessagesRoute() {
   let route = qs('.route[data-route="messages"]');
   if (route) return route;
@@ -528,55 +567,100 @@ function ensureMessagesRoute() {
   route.setAttribute('data-route', 'messages');
 
   route.innerHTML = `
-    <div class="mixtape-wrap" id="messageFormWrap">
-      <div class="mixtape-card">
-        <div class="mixtape-letter">
-          <div class="mixtape-title">Mixtape</div>
-          <div class="mixtape-subtitle">Leave a sweet little note inside the envelope.</div>
+    <div class="mixtape-page-wrap">
 
-          <div class="mixtape-form">
-            <label class="mixtape-field">
-              <span class="mixtape-label">To:</span>
-              <input class="mixtape-input" type="text" placeholder="write recipient name">
-            </label>
+      <!-- FORM SECTION -->
+      <div class="mixtape-wrap" id="messageFormWrap">
+        <div class="mixtape-card">
+          <div class="mixtape-letter">
+            <div class="mixtape-title">Mixtape</div>
+            <div class="mixtape-subtitle">Leave a sweet little note inside the envelope.</div>
 
-            <label class="mixtape-field">
-              <span class="mixtape-label">From:</span>
-              <input class="mixtape-input" type="text" placeholder="write your name">
-            </label>
+            <div class="mixtape-form">
+              <label class="mixtape-field">
+                <span class="mixtape-label">To:</span>
+                <input class="mixtape-input" type="text" id="mixtapeTo" placeholder="write recipient name">
+              </label>
 
-            <label class="mixtape-field">
-              <span class="mixtape-label">Tell them something</span>
-              <textarea class="mixtape-textarea" placeholder="write your message here"></textarea>
-            </label>
+              <label class="mixtape-field">
+                <span class="mixtape-label">From:</span>
+                <input class="mixtape-input" type="text" id="mixtapeFrom" placeholder="write your name">
+              </label>
 
-            <button class="mixtape-submit" type="button" id="messageSubmit">Submit</button>
+              <label class="mixtape-field">
+                <span class="mixtape-label">Tell them something</span>
+                <textarea class="mixtape-textarea" id="mixtapeMessage" placeholder="write your message here"></textarea>
+              </label>
+
+              <label class="mixtape-field">
+                <span class="mixtape-label">Choose a song 🎵</span>
+                <select class="mixtape-input mixtape-select" id="mixtapeSong">
+                  <option value="">— no song —</option>
+                  ${buildSongOptions()}
+                </select>
+              </label>
+
+              <button class="mixtape-submit" type="button" id="messageSubmit">Send Mixtape</button>
+            </div>
+          </div>
+
+          <div class="mixtape-envelope" aria-hidden="true">
+            <div class="mixtape-envelope-back"></div>
+            <div class="mixtape-envelope-front"></div>
           </div>
         </div>
-
-        <div class="mixtape-envelope" aria-hidden="true">
-          <div class="mixtape-envelope-back"></div>
-          <div class="mixtape-envelope-front"></div>
-        </div>
       </div>
-    </div>
 
-    <div class="form-thanks hidden" id="messageThanks">
-      <div class="thanks-title">Mixtape sent</div>
-      <div class="thanks-sub">Your message has been submitted.</div>
+      <!-- CARD WALL SECTION (hidden initially) -->
+      <div class="mixtape-sent-wrap hidden" id="mixtapeSentWrap">
+        <div class="mixtape-sent-header">
+          <div class="mixtape-sent-title">Mixtape sent ✉️</div>
+          <div class="mixtape-sent-sub">Your note is out there now.</div>
+          <button class="mixtape-send-another" type="button" id="mixtapeSendAnother">+ Send another</button>
+        </div>
+        <div class="mixtape-card-wall" id="mixtapeCardWall"></div>
+      </div>
+
     </div>
   `;
 
   contentArea.appendChild(route);
 
   const submit = qs('#messageSubmit', route);
-  const thanks = qs('#messageThanks', route);
   const formWrap = qs('#messageFormWrap', route);
+  const sentWrap = qs('#mixtapeSentWrap', route);
+  const cardWall = qs('#mixtapeCardWall', route);
+  const sendAnother = qs('#mixtapeSendAnother', route);
 
   if (submit) {
     submit.addEventListener('click', () => {
-      if (formWrap) formWrap.classList.add('hidden');
-      if (thanks) thanks.classList.remove('hidden');
+      const to = (qs('#mixtapeTo', route).value || '').trim();
+      const from = (qs('#mixtapeFrom', route).value || '').trim();
+      const message = (qs('#mixtapeMessage', route).value || '').trim();
+      const songKey = qs('#mixtapeSong', route).value;
+
+      if (!message) return;
+
+      mixtapeMessages.unshift({ to, from, message, songKey });
+
+      // Reset form
+      qs('#mixtapeTo', route).value = '';
+      qs('#mixtapeFrom', route).value = '';
+      qs('#mixtapeMessage', route).value = '';
+      qs('#mixtapeSong', route).value = '';
+
+      renderMixtapeCards(cardWall);
+
+      formWrap.classList.add('hidden');
+      sentWrap.classList.remove('hidden');
+    });
+  }
+
+  if (sendAnother) {
+    sendAnother.addEventListener('click', () => {
+      sentWrap.classList.add('hidden');
+      formWrap.classList.remove('hidden');
+      if (contentArea) contentArea.scrollTop = 0;
     });
   }
 
@@ -859,26 +943,38 @@ function renderArticle(articleId) {
   const data = articlesData[articleId];
   if (!data) return;
 
-  if (articleTitleEl) articleTitleEl.textContent = data.title;
-  if (articleDateEl) articleDateEl.textContent = data.date || '';
+  // Re-query every time so we always get live DOM references
+  const heroImg = document.getElementById('articleHeroImg');
+  const titleEl = document.getElementById('articleTitle');
+  const bodyEl = document.getElementById('articleBody');
+  const detail = document.getElementById('articleDetail');
+  const list = document.getElementById('newsList');
 
-  if (articleHeroImg) {
-    articleHeroImg.src = data.image;
-    articleHeroImg.alt = data.title;
+  if (heroImg) {
+    heroImg.src = data.image;
+    heroImg.alt = data.title;
   }
 
-  if (articleBodyEl) {
-    articleBodyEl.innerHTML = '';
+  if (titleEl) titleEl.textContent = data.title;
+
+  if (bodyEl) {
+    bodyEl.innerHTML = '';
+    const h2 = document.createElement('h2');
+    h2.className = 'article-title-text';
+    h2.id = 'articleTitle';
+    h2.textContent = data.title;
+    bodyEl.appendChild(h2);
+
     (data.paragraphs || []).forEach((paragraph) => {
       const p = document.createElement('p');
       p.className = 'article-text';
       p.textContent = paragraph;
-      articleBodyEl.appendChild(p);
+      bodyEl.appendChild(p);
     });
   }
 
-  if (newsList) newsList.classList.add('hidden');
-  if (articleDetail) articleDetail.classList.remove('hidden');
+  if (list) list.classList.add('hidden');
+  if (detail) detail.classList.remove('hidden');
   if (contentArea) contentArea.scrollTop = 0;
 }
 
@@ -1003,4 +1099,3 @@ resetProgressUI();
 syncMainPlayButton();
 updateActiveStates();
 showRoute('about');
-
