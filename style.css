@@ -67,23 +67,103 @@ button, input, textarea, select { font: inherit; }
 .launcher::before { top: -70px; left: -60px; }
 .launcher::after { right: -70px; bottom: -60px; }
 
-.wire-icon {
-  width: 128px;
-  height: 128px;
-  border: none;
-  border-radius: 28px;
-  background: var(--green);
-  color: #fff;
-  cursor: pointer;
+.ipod-launcher {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.ipod-shell {
+  width: min(100%, 290px);
+  padding: 22px 22px 28px;
+  border-radius: 34px;
+  background: linear-gradient(180deg, #dcdcdc 0%, #b9b9b9 48%, #a4a4a8 100%);
+  border: 1px solid rgba(34, 34, 34, 0.45);
+  box-shadow:
+    0 24px 50px rgba(12, 94, 0, 0.18),
+    inset 0 1px 0 rgba(255,255,255,.72);
+}
+
+.ipod-screen {
+  width: 100%;
+  aspect-ratio: 1 / 1.06;
+  background: #f8f8f5;
+  border: 4px solid #282123;
+  box-shadow: inset 0 1px 12px rgba(0,0,0,.04);
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  box-shadow: 0 18px 30px rgba(12,94,0,.22);
+  overflow: hidden;
 }
-.wire-mark { font-size: 34px; font-weight: 900; letter-spacing: 2px; line-height: 1; }
-.wire-text { font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+
+.ipod-wire-icon {
+  width: 74px;
+  height: 74px;
+  object-fit: contain;
+  display: block;
+}
+
+.ipod-wheel {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 28px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fafafa 0%, #ededed 100%);
+  border: 1px solid rgba(32, 32, 32, 0.18);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,.85);
+}
+
+.ipod-center-btn {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(32, 32, 32, 0.35);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #dddddd 0%, #bcbcbc 100%);
+  cursor: pointer;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.65);
+}
+
+.ipod-center-btn:active {
+  transform: translate(-50%, -50%) scale(.97);
+}
+
+.ipod-wheel-label {
+  position: absolute;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4e4e4e;
+  letter-spacing: .4px;
+}
+
+.ipod-wheel-label--top {
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ipod-wheel-label--left {
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ipod-wheel-label--right {
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ipod-wheel-label--bottom {
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 .frame {
   height: min(860px, calc(100vh - 40px));
@@ -1445,4 +1525,195 @@ button, input, textarea, select { font: inherit; }
     color: #57606f !important;
     margin-top: 10px !important;
     text-align: justify !important;
+}
+
+.mixtape-wrap {
+  padding: 10px 0 20px;
+}
+
+.mixtape-card {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.18));
+}
+
+.mixtape-letter {
+  position: relative;
+  width: 100%;
+  max-width: 270px;
+  margin: 0 auto;
+  padding: 34px 22px 140px;
+  background: #efede4;
+  z-index: 1;
+  text-align: center;
+}
+
+.mixtape-title {
+  font-family: var(--title-font);
+  color: var(--green);
+  font-size: 26px;
+  letter-spacing: .6px;
+  margin-bottom: 6px;
+}
+
+.mixtape-subtitle {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+.mixtape-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.mixtape-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mixtape-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.mixtape-input,
+.mixtape-textarea {
+  width: 100%;
+  border: 1px solid rgba(28, 28, 28, 0.18);
+  border-radius: 10px;
+  background: rgba(255,255,255,.78);
+  padding: 11px 12px;
+  font-size: 11px;
+  color: var(--ink);
+  outline: none;
+}
+
+.mixtape-textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.mixtape-submit {
+  align-self: center;
+  border: none;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 11px 24px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.mixtape-envelope {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  height: 240px;
+  margin: -94px auto 0;
+  background: #005f00;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.mixtape-envelope::before,
+.mixtape-envelope::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: #006d00;
+  z-index: 3;
+}
+
+.mixtape-envelope::before {
+  left: 0;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.mixtape-envelope::after {
+  right: 0;
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.mixtape-envelope-back {
+  position: absolute;
+  inset: 0;
+  background: #0a7200;
+  clip-path: polygon(0 20%, 50% 64%, 100% 20%, 100% 0, 0 0);
+  z-index: 0;
+}
+
+.mixtape-envelope-front {
+  position: absolute;
+  inset: auto 0 0;
+  height: 72%;
+  background: #005f00;
+  clip-path: polygon(0 0, 50% 60%, 100% 0, 100% 100%, 0 100%);
+  z-index: 4;
+}
+
+#mixtapeThanks {
+  text-align: center;
+  padding-top: 24px;
+}
+/* ===== FIX MOOD FACE ===== */
+.mood-face{
+  width: 108px;
+  height: 108px;
+  margin-top: -78px;
+  margin-bottom: 22px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: 'Poppins', sans-serif;
+  color: #111;
+}
+
+.mood-eye-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  line-height: 1;
+}
+
+.mood-eye{
+  font-size: 28px;
+  font-weight: 800;
+  display: inline-block;
+}
+
+.mood-mouth{
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  margin-top: -2px;
+}
+
+.mood-face--excited .mood-eye{ font-size: 30px; }
+.mood-face--sensitive .mood-eye{ font-size: 28px; }
+.mood-face--stressed .mood-eye{ font-size: 28px; }
+.mood-face--bored .mood-eye{ font-size: 28px; }
+.mood-face--angry .mood-eye{ font-size: 26px; }
+.mood-face--hurt .mood-eye{ font-size: 28px; }
+
+.now-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
 }
