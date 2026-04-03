@@ -161,7 +161,7 @@ button, input, textarea, select { font: inherit; }
 }
 .about-title {
   font-family: var(--title-font);
-  font-size: 22px;
+  font-size: 35px;
   font-weight: 900;
   letter-spacing: 2px;
   margin-bottom: 28px;
@@ -1369,4 +1369,59 @@ button, input, textarea, select { font: inherit; }
   font-family:'Poppins', sans-serif;
   font-size:16px;
   font-weight:700;
+}
+
+/* --- ACHIEVEMENTS STYLE --- */
+
+.achievement-container {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0eee2; /* Warna krem khas WIRE */
+}
+
+.achievement-title {
+    font-family: 'CoolveticaCustom', sans-serif;
+    font-size: 32px;
+    color: #004d00;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Card untuk Foto & Teks */
+.achievement-card {
+    width: 100%;
+    max-width: 400px; /* Biar pas di layar HP */
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* KUNCI UKURAN 16:9 */
+.achievement-banner {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Ini rahasianya biar 16:9 */
+    overflow: hidden;
+    background-color: #000;
+}
+
+.achievement-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Biar foto gak gepeng */
+    object-position: center; /* Fokus ke tengah gambar */
+}
+
+/* Teks di bawah foto */
+.achievement-desc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    padding: 15px;
+    text-align: left;
+    line-height: 1.5;
 }

@@ -816,3 +816,4 @@ resetProgressUI();
 syncMainPlayButton();
 updateActiveStates();
 showRoute('about');
+
