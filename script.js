@@ -211,9 +211,8 @@ function getTrackDurationLabel(trackKey) {
 }
 
 function syncMainPlayButton() {
-  if (playPauseBtn) {
-    playPauseBtn.textContent = isPlaying ? '❚❚' : '▶';
-  }
+  if (!playPauseBtn) return;
+  playPauseBtn.innerHTML = isPlaying ? '&#10074;&#10074;' : '&#9654;';
 }
 
 function resetProgressUI() {
@@ -353,29 +352,70 @@ function ensureMoodCheckRoute() {
   route.innerHTML = `
     <div class="mood-check-wrap">
       <h2 class="mood-check-title">How are you really feeling today?</h2>
+
       <div class="mood-grid">
         <button class="mood-option excited" type="button" data-mood="excited">
-          <div class="mood-face">><</div>
+          <div class="mood-face mood-face--excited">
+            <div class="mood-eye-row">
+              <span class="mood-eye">×</span>
+              <span class="mood-eye">×</span>
+            </div>
+          </div>
           <div class="mood-label">Excited</div>
         </button>
+
         <button class="mood-option sensitive" type="button" data-mood="sensitive">
-          <div class="mood-face">◔◔</div>
+          <div class="mood-face mood-face--sensitive">
+            <div class="mood-eye-row">
+              <span class="mood-eye">◕</span>
+              <span class="mood-eye">◕</span>
+            </div>
+            <div class="mood-mouth"></div>
+          </div>
           <div class="mood-label">Sensitive</div>
         </button>
+
         <button class="mood-option stressed" type="button" data-mood="stressed">
-          <div class="mood-face">◎◎</div>
+          <div class="mood-face mood-face--stressed">
+            <div class="mood-eye-row">
+              <span class="mood-eye">⊙</span>
+              <span class="mood-eye">⊙</span>
+            </div>
+            <div class="mood-mouth"></div>
+          </div>
           <div class="mood-label">Stressed</div>
         </button>
+
         <button class="mood-option bored" type="button" data-mood="bored">
-          <div class="mood-face">◡◡</div>
+          <div class="mood-face mood-face--bored">
+            <div class="mood-eye-row">
+              <span class="mood-eye">－</span>
+              <span class="mood-eye">－</span>
+            </div>
+            <div class="mood-mouth"></div>
+          </div>
           <div class="mood-label">Bored</div>
         </button>
+
         <button class="mood-option angry" type="button" data-mood="angry">
-          <div class="mood-face">一 一</div>
+          <div class="mood-face mood-face--angry">
+            <div class="mood-eye-row">
+              <span class="mood-eye">◣</span>
+              <span class="mood-eye">◢</span>
+            </div>
+            <div class="mood-mouth"></div>
+          </div>
           <div class="mood-label">Angry</div>
         </button>
+
         <button class="mood-option hurt" type="button" data-mood="hurt">
-          <div class="mood-face">◠◠</div>
+          <div class="mood-face mood-face--hurt">
+            <div class="mood-eye-row">
+              <span class="mood-eye">◕</span>
+              <span class="mood-eye">◕</span>
+            </div>
+            <div class="mood-mouth"></div>
+          </div>
           <div class="mood-label">Hurt</div>
         </button>
       </div>
@@ -442,7 +482,7 @@ function ensurePlaylistDetailRoute() {
 
   route.innerHTML = `
     <div class="playlist-detail-wrap">
-      <button class="playlist-detail-back" type="button" id="playlistDetailBack">← Back</button>
+      <button class="playlist-detail-back" type="button" id="playlistDetailBack">â† Back</button>
 
       <div class="playlist-detail-hero">
         <div class="playlist-detail-hero-image" id="playlistHeroImageWrap"></div>
@@ -482,25 +522,41 @@ function ensureMessagesRoute() {
   route.setAttribute('data-route', 'messages');
 
   route.innerHTML = `
-    <div class="message-form-wrap" id="messageFormWrap">
-      <div class="contact-heading">Send Messages</div>
-      <div class="form-group">
-        <label class="form-label">To:</label>
-        <input class="form-input" type="text" placeholder="write recipient name">
+    <div class="mixtape-wrap" id="messageFormWrap">
+      <div class="mixtape-card">
+        <div class="mixtape-letter">
+          <div class="mixtape-title">Mixtape</div>
+          <div class="mixtape-subtitle">Leave a sweet little note inside the envelope.</div>
+
+          <div class="mixtape-form">
+            <label class="mixtape-field">
+              <span class="mixtape-label">To:</span>
+              <input class="mixtape-input" type="text" placeholder="write recipient name">
+            </label>
+
+            <label class="mixtape-field">
+              <span class="mixtape-label">From:</span>
+              <input class="mixtape-input" type="text" placeholder="write your name">
+            </label>
+
+            <label class="mixtape-field">
+              <span class="mixtape-label">Tell them something</span>
+              <textarea class="mixtape-textarea" placeholder="write your message here"></textarea>
+            </label>
+
+            <button class="mixtape-submit" type="button" id="messageSubmit">Submit</button>
+          </div>
+        </div>
+
+        <div class="mixtape-envelope" aria-hidden="true">
+          <div class="mixtape-envelope-back"></div>
+          <div class="mixtape-envelope-front"></div>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Choose songs:</label>
-        <input class="form-input" type="text" placeholder="write song title">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Send messages to them:</label>
-        <textarea class="form-input form-textarea" placeholder="write your message"></textarea>
-      </div>
-      <button class="form-submit" type="button" id="messageSubmit">Submit</button>
     </div>
 
     <div class="form-thanks hidden" id="messageThanks">
-      <div class="thanks-title">Message sent</div>
+      <div class="thanks-title">Mixtape sent</div>
       <div class="thanks-sub">Your message has been submitted.</div>
     </div>
   `;
@@ -531,7 +587,7 @@ function ensureSendMessagesMenu() {
   btn.className = 'menu-link';
   btn.type = 'button';
   btn.dataset.route = 'messages';
-  btn.textContent = 'Send Messages';
+  btn.textContent = 'Mixtape';
 
   suggestionBtn.insertAdjacentElement('afterend', btn);
 
@@ -774,10 +830,10 @@ const articlesData = {
     image: 'foto news 1.jpeg',
     paragraphs: [
       'Depok-Program studi (prodi) Produksi Media, Program Pendidikan Vokasi, Universitas Indonesia (UI) dikenal sebagai kawah candradimuka bagi talenta kreatif muda Indonesia. Melalui pendekatan pembelajaran berbasis proyek (project-based learning) dan kolaborasi lintas disiplin, prodi ini mendorong mahasiswa untuk menggabungkan budaya, teknologi, dan kreativitas dalam menghasilkan karya yang relevan di kancah global.',
-      'Hasilnya terlihat dari lima konsentrasi—Game, Fashion & Lifestyle, Musik, Film, dan Mainan—menunjukkan hasil kolaborasi lintas disiplin yang dikembangkan selama perkuliahan. Dari ranah Game, tim Ox-Lab meluncurkan Lodaya Conquest, gim edukasi 2D pixel art bertema Reog Ponorogo yang mengajak pemain menjelajahi nilai-nilai budaya melalui gameplay interaktif. Di bidang Fashion & Lifestyle, studio FLUI menampilkan koleksi FLUENT dan Bayang yang menggabungkan desain modern, isu keberlanjutan, dan teknologi augmented reality. Konsentrasi Musik lewat WIRE Studio memperkenalkan E-Zine, zine digital interaktif yang membahas musik independen, tren pop culture, dan narasi kreatif yang dekat dengan gaya hidup urban.',
+      'Hasilnya terlihat dari lima konsentrasiâ€”Game, Fashion & Lifestyle, Musik, Film, dan Mainanâ€”menunjukkan hasil kolaborasi lintas disiplin yang dikembangkan selama perkuliahan. Dari ranah Game, tim Ox-Lab meluncurkan Lodaya Conquest, gim edukasi 2D pixel art bertema Reog Ponorogo yang mengajak pemain menjelajahi nilai-nilai budaya melalui gameplay interaktif. Di bidang Fashion & Lifestyle, studio FLUI menampilkan koleksi FLUENT dan Bayang yang menggabungkan desain modern, isu keberlanjutan, dan teknologi augmented reality. Konsentrasi Musik lewat WIRE Studio memperkenalkan E-Zine, zine digital interaktif yang membahas musik independen, tren pop culture, dan narasi kreatif yang dekat dengan gaya hidup urban.',
       'Sementara itu, konsentrasi Film menampilkan dokumenter Baduy: The Silent Education yang berisikan potret kehidupan masyarakat adat Baduy yang mengajarkan nilai kehidupan melalui praktik pendidikan sederhana tetapi sarat makna. Film ini mampu menyentuh hati penonton internasional dengan pesan universalnya. Sedangkan dari bidang Mainan, TOBO Studio menciptakan Tinka dan ToBo, mainan modular edukatif yang merangsang kreativitas anak lewat bentuk yang fleksibel dan menyenangkan.',
       'Berbagai karya tersebut ditampilkan saat delegasi dari prodi Produksi Media bersama prodi lainnya saat gelaran Osaka World Expo 2025 yang berlangsung di Paviliun Indonesia pada 21-27 Juli 2025. Mereka tampil memukau dengan karya-karya inovatif yang memadukan budaya lokal, teknologi modern, dan narasi kreatif. Tak hanya pameran, delegasi juga mengikuti forum bisnis internasional, serta melakukan kunjungan akademik ke Osaka University dan Kansai University. Berbagai agenda tersebut membuka peluang kolaborasi riset dan industri kreatif di masa depan.',
-      'Ketua Program Studi Produksi Media, Ngurah Rangga Wiwesa, M.I.Kom., mengatakan, "Partisipasi mahasiswa kami di Osaka World Expo 2025 merupakan bentuk nyata kontribusi pendidikan vokasi dalam diplomasi budaya berbasis inovasi. Kami bangga menunjukkan bahwa karya anak muda Indonesia mampu tampil percaya diri di panggung global". Senada dengan Rangga, Direktur Program Pendidikan Vokasi UI, Padang Wicaksono, S.E., Ph.D, mengatakan bahwa kehadiran mahasiswa Vokasi UI di Osaka World Expo 2025 membuktikan bahwa pendidikan vokasi bukan hanya mampu mencetak talenta yang unggul secara kompetensi, melainkan juga mampu mengangkat identitas dan kebanggaan bangsa di level internasional. “Kami berharap ke depan semakin banyak kolaborasi yang membuka jalan bagi mahasiswa untuk berkiprah di panggung dunia sebagai duta kebudayaan untuk Indonesia,” ujar Padang. Keikutsertaan mahasiswa Vokasi UI di Osaka World Expo 2025 menjadi bukti bahwa pendekatan interdisipliner dalam pendidikan vokasi dapat melahirkan inovasi yang relevan secara global, berakar pada budaya, dan berdampak bagi masa depan industri kreatif dunia.'
+      'Ketua Program Studi Produksi Media, Ngurah Rangga Wiwesa, M.I.Kom., mengatakan, "Partisipasi mahasiswa kami di Osaka World Expo 2025 merupakan bentuk nyata kontribusi pendidikan vokasi dalam diplomasi budaya berbasis inovasi. Kami bangga menunjukkan bahwa karya anak muda Indonesia mampu tampil percaya diri di panggung global". Senada dengan Rangga, Direktur Program Pendidikan Vokasi UI, Padang Wicaksono, S.E., Ph.D, mengatakan bahwa kehadiran mahasiswa Vokasi UI di Osaka World Expo 2025 membuktikan bahwa pendidikan vokasi bukan hanya mampu mencetak talenta yang unggul secara kompetensi, melainkan juga mampu mengangkat identitas dan kebanggaan bangsa di level internasional. â€œKami berharap ke depan semakin banyak kolaborasi yang membuka jalan bagi mahasiswa untuk berkiprah di panggung dunia sebagai duta kebudayaan untuk Indonesia,â€ ujar Padang. Keikutsertaan mahasiswa Vokasi UI di Osaka World Expo 2025 menjadi bukti bahwa pendekatan interdisipliner dalam pendidikan vokasi dapat melahirkan inovasi yang relevan secara global, berakar pada budaya, dan berdampak bagi masa depan industri kreatif dunia.'
     ]
   },
   2: {
@@ -941,4 +997,3 @@ resetProgressUI();
 syncMainPlayButton();
 updateActiveStates();
 showRoute('about');
-
