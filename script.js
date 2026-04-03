@@ -19,6 +19,7 @@ const durationTime = document.getElementById('durationTime');
 const progressTrack =
   document.getElementById('progressTrack') ||
   document.querySelector('.progress-track');
+
 const audioEl = document.getElementById('audioPlayer');
 
 let currentRoute = 'about';
@@ -27,112 +28,180 @@ let currentMoodKey = null;
 let currentQueue = [];
 let isPlaying = false;
 
-const musicTracks = {
-  'sh-alleen': { title: 'Alleen', artist: 'Secret Hideaway', audio: 'audio/alleen-demo.wav' },
-  'sh-melukis': { title: 'Melukis Obituari', artist: 'Secret Hideaway', audio: 'audio/melukis-demo.wav' },
-  'sh-try': { title: 'Try Again', artist: 'Secret Hideaway', audio: 'audio/tryagain-demo.wav' },
-  'sh-hideaway': { title: 'Hideaway', artist: 'Secret Hideaway', audio: 'audio/hideaway-demo.wav' },
-  'sh-ever': { title: 'Ever', artist: 'Arteeich', audio: 'audio/ever-demo.wav' },
-  'sh-u': { title: 'U', artist: 'Arteeich', audio: 'audio/u-demo.wav' },
-  'sh-sike': { title: 'Sike', artist: 'Arteeich', audio: 'audio/sike-demo.wav' },
-  'sh-fool': { title: 'Fool', artist: 'Arteeich', audio: 'audio/fool-demo.wav' },
-  'sh-fine': { title: 'Fine', artist: 'Arteeich', audio: 'audio/fine-demo.wav' },
-  'jz-aku': { title: 'Aku, Kau, dan Musik', artist: 'JUZZER', audio: 'audio/akukaudanmusik-demo.wav' },
-  'jz-buku': { title: 'Buku Pesta Cinta', artist: 'JUZZER', audio: 'audio/bukupestacinta-demo.wav' },
-  'jz-apakah': { title: 'Apakah Aku Harus Berubah Menjadi Perempuan', artist: 'JUZZER', audio: 'audio/apakah-demo.wav' },
-  'jz-asam': { title: 'Asam Manis', artist: 'JUZZER', audio: 'audio/asammanis-demo.wav'},
-  'jz-hey': { title: 'Hey Kau Gadis Nan Jauh Di Sana', artist: 'JUZZER', audio: 'audio/heykaugadisnanjauhdisana-demo.wav'},
-  'jz-malam': { title: 'Malam Yang Gulita', artist: 'JUZZER', audio: 'audio/malamyanggulita-demo.wav'},
-  'jz-romansa': { title: 'Romansa Akhir Pekan', artist: 'JUZZER', audio: 'audio/romansaakhirpekan-demo.wav'}
-};
-
-const musicPlaybackOrder = [
-  'sh-alleen',
-  'sh-melukis',
-  'sh-try',
-  'sh-hideaway',
-  'sh-ever',
-  'sh-u',
-  'sh-sike',
-  'sh-fool',
-  'sh-fine',
-  'jz-aku',
-  'jz-buku',
-  'jz-apakah',
-  'jz-asam',
-  'jz-hey',
-  'jz-malam',
-  'jz-romansa'
-];
-
-const moodPlaylists = {
-  chill: ['sh-alleen', 'sh-u', 'sh-hideaway'],
-  'get-up': ['jz-aku', 'sh-ever', 'sh-try'],
-  rage: ['jz-apakah', 'sh-sike', 'sh-fool'],
-  'feeling-blue': ['sh-melukis', 'sh-alleen', 'sh-hideaway']
-};
-
-const moodRecommendations = {
-  excited: ['jz-aku', 'jz-buku', 'sh-try', 'sh-ever'],
-  sensitive: ['sh-melukis', 'sh-alleen', 'sh-hideaway'],
-  stressed: ['sh-fine', 'sh-sike', 'jz-apakah'],
-  bored: ['sh-u', 'sh-ever', 'jz-aku'],
-  angry: ['jz-apakah', 'sh-sike', 'sh-fool'],
-  hurt: ['sh-alleen', 'sh-melukis', 'sh-hideaway']
-};
-const lastMoodPick = {};
-
-function getRandomMoodTrack(moodName) {
-  const moodTracks = moodRecommendations[moodName] || [];
-  if (!moodTracks.length) return null;
-  if (moodTracks.length === 1) return moodTracks[0];
-
-  let picked = null;
-  do {
-    const randomIndex = Math.floor(Math.random() * moodTracks.length);
-    picked = moodTracks[randomIndex];
-  } while (picked === lastMoodPick[moodName]);
-
-  lastMoodPick[moodName] = picked;
-  return picked;
-}
-
-function qs(selector, scope = document) {
-  return scope.querySelector(selector);
-}
-
-function qsa(selector, scope = document) {
-  return Array.from(scope.querySelectorAll(selector));
-}
-
-function formatTime(sec) {
-  const m = Math.floor(sec / 60) || 0;
-  const s = String(Math.floor(sec % 60) || 0).padStart(2, '0');
-  return `${m}:${s}`;
-}
+const qs = (selector, parent = document) => parent.querySelector(selector);
+const qsa = (selector, parent = document) => Array.from(parent.querySelectorAll(selector));
 
 function getRoutes() {
   return qsa('.route');
 }
 
+const musicTracks = {
+  'sh-alleen': {
+    title: 'Alleen',
+    artist: 'Secret Hideaway',
+    audio: 'Alleen.mp3',
+    image: 'Alleen.jpg'
+  },
+  'sh-melukis': {
+    title: 'Melukis Obituari',
+    artist: 'Secret Hideaway',
+    audio: 'Melukis Obituari.mp3',
+    image: 'Melukis Obituari.jpg'
+  },
+  'sh-try': {
+    title: 'Try Again',
+    artist: 'Secret Hideaway',
+    audio: 'Try Again.mp3',
+    image: 'Try Again.jpg'
+  },
+  'sh-hideaway': {
+    title: 'Hideaway',
+    artist: 'Secret Hideaway',
+    audio: 'Hideaway.mp3',
+    image: 'Hideaway.jpg'
+  },
+  'sh-ever': {
+    title: 'Ever',
+    artist: 'Arteeich',
+    audio: 'Ever.mp3',
+    image: 'Ever.jpg'
+  },
+  'sh-u': {
+    title: 'U',
+    artist: 'Arteeich',
+    audio: 'U.mp3',
+    image: 'U.jpg'
+  },
+  'sh-sike': {
+    title: 'Sike',
+    artist: 'Arteeich',
+    audio: 'Sike.mp3',
+    image: 'Sike.jpg'
+  },
+  'sh-fool': {
+    title: 'Fool',
+    artist: 'Arteeich',
+    audio: 'fool.mp3',
+    image: 'fool.jpg'
+  },
+  'sh-fine': {
+    title: 'Fine',
+    artist: 'Arteeich',
+    audio: 'Fine.mp3',
+    image: 'fool.jpg'
+  },
+  'jz-aku': {
+    title: 'Aku, Kau, dan Musik',
+    artist: 'JUZZER',
+    audio: 'Aku Kau Dan Musik.mp3',
+    image: 'Aku Kau Dan Musik.jpg'
+  },
+  'jz-buku': {
+    title: 'Buku Pesta Cinta',
+    artist: 'JUZZER',
+    audio: 'Buku Pesta Cinta.mp3',
+    image: 'Buku Pesta Cinta.jpg'
+  },
+  'jz-apakah': {
+    title: 'Apakah Aku Harus Berubah Menjadi Perempuan',
+    artist: 'JUZZER',
+    audio: 'Apakah Aku Harus Berubah Menjadi Perempuan.mp3',
+    image: 'Buku Pesta Cinta.jpg'
+  },
+  'jz-asam': {
+    title: 'Asam Manis',
+    artist: 'JUZZER',
+    audio: 'Asam Manis.mp3',
+    image: 'Buku Pesta Cinta.jpg'
+  },
+  'jz-hey': {
+    title: 'Hey Kau Gadis Nan Jauh Di Sana (Live)',
+    artist: 'JUZZER',
+    audio: 'Hey Kau Gadis Nan Jauh Di Sana (Live).mp3',
+    image: 'Hey Kau Gadis Nan Jauh Di Sana (Live).jpg'
+  },
+  'jz-malam': {
+    title: 'Malam Yang Gulita',
+    artist: 'JUZZER',
+    audio: 'Malam Yang Gulita.mp3',
+    image: 'Malam Yang Gulita.jpg'
+  },
+  'jz-romansa': {
+    title: 'Romansa Akhir Pekan',
+    artist: 'JUZZER',
+    audio: 'Romansa Akhir Pekan.mp3',
+    image: 'Romansa Akhir Pekan.jpg'
+  }
+};
+
+const musicPlaybackOrder = Object.keys(musicTracks);
+
+const moodPlaylists = {
+  chill: ['sh-ever', 'sh-fine', 'sh-hideaway'],
+  'get-up': ['jz-aku', 'sh-sike', 'sh-u'],
+  rage: ['jz-apakah', 'jz-asam', 'sh-try'],
+  'feeling-blue': ['sh-alleen', 'sh-melukis', 'jz-malam']
+};
+
+const moodMap = {
+  excited: ['jz-aku', 'sh-sike', 'sh-u'],
+  sensitive: ['sh-alleen', 'sh-melukis', 'sh-hideaway'],
+  stressed: ['jz-asam', 'sh-try', 'jz-romansa'],
+  bored: ['sh-ever', 'sh-fine', 'jz-buku'],
+  angry: ['jz-apakah', 'jz-malam', 'sh-try'],
+  hurt: ['sh-alleen', 'sh-hideaway', 'jz-romansa']
+};
+
+function formatTime(value) {
+  if (!isFinite(value)) return '0:00';
+  const minutes = Math.floor(value / 60);
+  const seconds = Math.floor(value % 60);
+  return `${minutes}:${String(seconds).padStart(2, '0')}`;
+}
+
+function getRandomMoodTrack(moodName) {
+  const list = moodMap[moodName] || [];
+  if (!list.length) return null;
+  return list[Math.floor(Math.random() * list.length)];
+}
+
 function getTrackImageNode(trackKey) {
-  const img = qs(`.track-row[data-track="${trackKey}"] img`);
-  return img ? img.cloneNode(true) : null;
+  const track = musicTracks[trackKey];
+  if (!track || !track.image) return null;
+
+  const img = document.createElement('img');
+  img.src = track.image;
+  img.alt = track.title;
+  img.onerror = function () {
+    this.style.display = 'none';
+  };
+  return img;
 }
 
 function getPlaylistImageNode(playlistKey) {
-  const img = qs(`.playlist-card[data-track="${playlistKey}"] .mood-bg`);
-  return img ? img.cloneNode(true) : null;
+  const cardImg = qs(`.playlist-card[data-track="${playlistKey}"] .mood-bg`);
+  if (cardImg) {
+    const clone = cardImg.cloneNode(true);
+    clone.onerror = function () {
+      this.style.display = 'none';
+    };
+    return clone;
+  }
+  return null;
 }
 
-function fillContainerWithImage(container, imageNode, className = '') {
+function fillContainerWithImage(container, imageNode, fallbackClass = 'cover-shape') {
   if (!container) return;
   container.innerHTML = '';
-  if (!imageNode) return;
 
-  const clone = imageNode.cloneNode(true);
-  if (className) clone.classList.add(className);
-  container.appendChild(clone);
+  if (imageNode) {
+    container.appendChild(imageNode.cloneNode(true));
+    return;
+  }
+
+  const fallback = document.createElement('div');
+  fallback.className = fallbackClass;
+  container.appendChild(fallback);
 }
 
 function getTrackDurationLabel(trackKey) {
@@ -316,13 +385,14 @@ function ensureMoodCheckRoute() {
   contentArea.appendChild(route);
 
   qsa('.mood-option', route).forEach((option) => {
-  option.addEventListener('click', () => {
-    const moodName = option.dataset.mood;
-    const trackKey = getRandomMoodTrack(moodName);
-    if (!trackKey) return;
-    openMoodResult(trackKey);
+    option.addEventListener('click', () => {
+      const moodName = option.dataset.mood;
+      const trackKey = getRandomMoodTrack(moodName);
+      if (!trackKey) return;
+      openMoodResult(trackKey);
+    });
   });
-});
+
   return route;
 }
 
@@ -351,13 +421,15 @@ function ensureMoodResultRoute() {
   contentArea.appendChild(route);
 
   const btn = qs('#continueToMusicBtn', route);
-if (btn) {
-  btn.addEventListener('click', () => {
-    hasPassedMoodGate = true;
-    setMoodFullscreen(false);
-    showRoute('music');
-  });
-}
+  if (btn) {
+    btn.addEventListener('click', () => {
+      hasPassedMoodGate = true;
+      setMoodFullscreen(false);
+      showRoute('music');
+    });
+  }
+
+  return route;
 }
 
 function ensurePlaylistDetailRoute() {
@@ -467,7 +539,7 @@ function ensureSendMessagesMenu() {
     showRoute('messages');
   });
 }
-hasPassedMoodGate = true;
+
 function openMoodResult(trackKey) {
   const route = ensureMoodResultRoute();
   const track = musicTracks[trackKey];
@@ -490,7 +562,6 @@ function openMoodResult(trackKey) {
   playTrack(trackKey, {
     queue: [trackKey],
     moodKey: null
-    
   });
 }
 
@@ -611,6 +682,7 @@ function openMoodFlow() {
   setMoodFullscreen(true);
   showRoute('mood-check');
 }
+
 function showApp() {
   if (launcherScreen) launcherScreen.classList.add('hidden');
   if (appScreen) appScreen.classList.remove('hidden');
@@ -629,10 +701,23 @@ function openArtistDetail(name, imgSrc, bioText) {
 
   if (artistListContainer) artistListContainer.classList.add('hidden');
   if (artistDetailContainer) artistDetailContainer.classList.remove('hidden');
-  if (displayArtistName) displayArtistName.innerText = name;
-  if (displayArtistImg) displayArtistImg.src = imgSrc;
-  if (displayArtistBio) displayArtistBio.innerHTML = bioText;
 
+  if (displayArtistName) displayArtistName.textContent = name;
+
+  if (displayArtistImg) {
+    displayArtistImg.src = imgSrc;
+    displayArtistImg.alt = name;
+    displayArtistImg.onerror = function () {
+      this.style.display = 'none';
+    };
+    displayArtistImg.style.display = 'block';
+  }
+
+  if (displayArtistBio) {
+    displayArtistBio.innerHTML = bioText;
+  }
+
+  const contentArea = document.querySelector('.content');
   if (contentArea) contentArea.scrollTop = 0;
 }
 window.openArtistDetail = openArtistDetail;
@@ -640,12 +725,16 @@ window.openArtistDetail = openArtistDetail;
 function closeArtistDetail() {
   const artistListContainer = document.getElementById('artistListContainer');
   const artistDetailContainer = document.getElementById('artistDetailContainer');
+  const displayArtistImg = document.getElementById('displayArtistImg');
 
   if (artistListContainer) artistListContainer.classList.remove('hidden');
   if (artistDetailContainer) artistDetailContainer.classList.add('hidden');
+
+  if (displayArtistImg) {
+    displayArtistImg.style.display = 'block';
+  }
 }
 window.closeArtistDetail = closeArtistDetail;
-
 function navigateTo(route) {
   if (route === 'music') {
     openMoodFlow();
@@ -675,29 +764,65 @@ const articleDetail = document.getElementById('articleDetail');
 const articleBack = document.getElementById('articleBack');
 const articleHeroImg = document.getElementById('articleHeroImg');
 const articleTitleEl = document.getElementById('articleTitle');
+const articleDateEl = document.getElementById('articleDate');
+const articleBodyEl = document.getElementById('articleBody');
 
 const articlesData = {
-  1: { title: 'Article', image: 'assets/news/article1.jpg' },
-  2: { title: 'Article', image: 'assets/news/article2.jpg' },
-  3: { title: 'Article', image: 'assets/news/article3.jpg' },
-  4: { title: 'Article', image: 'assets/news/article4.jpg' },
-  5: { title: 'Article', image: 'assets/news/article5.jpg' }
+  1: {
+    title: 'Langkah Mendunia Mahasiswa Vokasi UI Lewat Inovasi Berdampak',
+    date: '11 Agustus 2025',
+    image: 'foto news 1.jpeg',
+    paragraphs: [
+      'Depok-Program studi (prodi) Produksi Media, Program Pendidikan Vokasi, Universitas Indonesia (UI) dikenal sebagai kawah candradimuka bagi talenta kreatif muda Indonesia. Melalui pendekatan pembelajaran berbasis proyek (project-based learning) dan kolaborasi lintas disiplin, prodi ini mendorong mahasiswa untuk menggabungkan budaya, teknologi, dan kreativitas dalam menghasilkan karya yang relevan di kancah global.',
+      'Hasilnya terlihat dari lima konsentrasi—Game, Fashion & Lifestyle, Musik, Film, dan Mainan—menunjukkan hasil kolaborasi lintas disiplin yang dikembangkan selama perkuliahan. Dari ranah Game, tim Ox-Lab meluncurkan Lodaya Conquest, gim edukasi 2D pixel art bertema Reog Ponorogo yang mengajak pemain menjelajahi nilai-nilai budaya melalui gameplay interaktif. Di bidang Fashion & Lifestyle, studio FLUI menampilkan koleksi FLUENT dan Bayang yang menggabungkan desain modern, isu keberlanjutan, dan teknologi augmented reality. Konsentrasi Musik lewat WIRE Studio memperkenalkan E-Zine, zine digital interaktif yang membahas musik independen, tren pop culture, dan narasi kreatif yang dekat dengan gaya hidup urban.',
+      'Sementara itu, konsentrasi Film menampilkan dokumenter Baduy: The Silent Education yang berisikan potret kehidupan masyarakat adat Baduy yang mengajarkan nilai kehidupan melalui praktik pendidikan sederhana tetapi sarat makna. Film ini mampu menyentuh hati penonton internasional dengan pesan universalnya. Sedangkan dari bidang Mainan, TOBO Studio menciptakan Tinka dan ToBo, mainan modular edukatif yang merangsang kreativitas anak lewat bentuk yang fleksibel dan menyenangkan.',
+      'Berbagai karya tersebut ditampilkan saat delegasi dari prodi Produksi Media bersama prodi lainnya saat gelaran Osaka World Expo 2025 yang berlangsung di Paviliun Indonesia pada 21-27 Juli 2025. Mereka tampil memukau dengan karya-karya inovatif yang memadukan budaya lokal, teknologi modern, dan narasi kreatif. Tak hanya pameran, delegasi juga mengikuti forum bisnis internasional, serta melakukan kunjungan akademik ke Osaka University dan Kansai University. Berbagai agenda tersebut membuka peluang kolaborasi riset dan industri kreatif di masa depan.',
+      'Ketua Program Studi Produksi Media, Ngurah Rangga Wiwesa, M.I.Kom., mengatakan, "Partisipasi mahasiswa kami di Osaka World Expo 2025 merupakan bentuk nyata kontribusi pendidikan vokasi dalam diplomasi budaya berbasis inovasi. Kami bangga menunjukkan bahwa karya anak muda Indonesia mampu tampil percaya diri di panggung global". Senada dengan Rangga, Direktur Program Pendidikan Vokasi UI, Padang Wicaksono, S.E., Ph.D, mengatakan bahwa kehadiran mahasiswa Vokasi UI di Osaka World Expo 2025 membuktikan bahwa pendidikan vokasi bukan hanya mampu mencetak talenta yang unggul secara kompetensi, melainkan juga mampu mengangkat identitas dan kebanggaan bangsa di level internasional. “Kami berharap ke depan semakin banyak kolaborasi yang membuka jalan bagi mahasiswa untuk berkiprah di panggung dunia sebagai duta kebudayaan untuk Indonesia,” ujar Padang. Keikutsertaan mahasiswa Vokasi UI di Osaka World Expo 2025 menjadi bukti bahwa pendekatan interdisipliner dalam pendidikan vokasi dapat melahirkan inovasi yang relevan secara global, berakar pada budaya, dan berdampak bagi masa depan industri kreatif dunia.'
+    ]
+  },
+  2: {
+    title: 'WIRE: Label Rekaman Musik Pertama dari Prodi Produksi Media Vokasi UI',
+    date: '8 November 2024',
+    image: 'foto news 2.png',
+    paragraphs: [
+      'WIRE merupakan label rekaman musik pertama yang dibangun oleh Program Studi Produksi Media Vokasi UI sebagai wadah berkarya, berproduksi, dan bereksperimen bagi mahasiswa konsentrasi musik.',
+      'Lewat WIRE, mahasiswa tidak hanya belajar membuat karya musik, tetapi juga terlibat langsung dalam proses branding, promosi, distribusi digital, dokumentasi visual, hingga pengelolaan identitas artist.',
+      'Kehadiran label ini menjadi langkah penting dalam membangun ekosistem musik yang lebih profesional di lingkungan kampus, sehingga mahasiswa dapat merasakan pengalaman industri sejak masih menjalani perkuliahan.',
+      'Selain menjadi ruang publikasi karya, WIRE juga diharapkan menjadi jembatan kolaborasi antara mahasiswa, dosen, dan pelaku industri kreatif, sekaligus memperkuat posisi Produksi Media Vokasi UI dalam pengembangan talenta musik muda.'
+    ]
+  }
 };
+
+function renderArticle(articleId) {
+  const data = articlesData[articleId];
+  if (!data) return;
+
+  if (articleTitleEl) articleTitleEl.textContent = data.title;
+  if (articleDateEl) articleDateEl.textContent = data.date || '';
+
+  if (articleHeroImg) {
+    articleHeroImg.src = data.image;
+    articleHeroImg.alt = data.title;
+  }
+
+  if (articleBodyEl) {
+    articleBodyEl.innerHTML = '';
+    (data.paragraphs || []).forEach((paragraph) => {
+      const p = document.createElement('p');
+      p.className = 'article-text';
+      p.textContent = paragraph;
+      articleBodyEl.appendChild(p);
+    });
+  }
+
+  if (newsList) newsList.classList.add('hidden');
+  if (articleDetail) articleDetail.classList.remove('hidden');
+  if (contentArea) contentArea.scrollTop = 0;
+}
 
 qsa('.news-row').forEach((row) => {
   row.addEventListener('click', () => {
-    const data = articlesData[row.dataset.article];
-    if (!data) return;
-
-    if (articleTitleEl) articleTitleEl.textContent = data.title;
-    if (articleHeroImg) {
-      articleHeroImg.src = data.image;
-      articleHeroImg.alt = data.title;
-    }
-
-    if (newsList) newsList.classList.add('hidden');
-    if (articleDetail) articleDetail.classList.remove('hidden');
-    if (contentArea) contentArea.scrollTop = 0;
+    renderArticle(row.dataset.article);
   });
 });
 
