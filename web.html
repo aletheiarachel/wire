@@ -110,7 +110,7 @@
       </button>
 
       <button class="track-row" type="button" data-track="sh-melukis"
-              onclick="playMusic('Melukis Obituari', 'Secret Hideaway', 'Melukis Obituari.jpg', 'Secret Hideaway - Melukis Obituari (SPOTISAVER).mp3')">
+              onclick="playMusic('Melukis Obituari', 'Secret Hideaway', 'Melukis Obituari.jpg', 'melukis.mp3')">
         <div class="track-thumb">
           <img src="Melukis Obituari.jpg" alt="Melukis Obituari" onerror="this.style.display='none'">
         </div>
@@ -120,7 +120,7 @@
       </button>
 
       <button class="track-row" type="button" data-track="sh-try"
-              onclick="playMusic('Try Again', 'Secret Hideaway', 'Try Again.jpg', 'Secret Hideaway - Try Again (SPOTISAVER).mp3')">
+              onclick="playMusic('Try Again', 'Secret Hideaway', 'Try Again.jpg', 'tryagain.mp3')">
         <div class="track-thumb">
           <img src="Try Again.jpg" alt="Try Again" onerror="this.style.display='none'">
         </div>
@@ -130,7 +130,7 @@
       </button>
 
       <button class="track-row" type="button" data-track="sh-hideaway"
-              onclick="playMusic('Hideaway', 'Secret Hideaway', 'Hideaway.jpg', 'Secret Hideaway - Hideaway (SPOTISAVER).mp3')">
+              onclick="playMusic('Hideaway', 'Secret Hideaway', 'Hideaway.jpg', 'hideaway.mp3')">
         <div class="track-thumb">
           <img src="Hideaway.jpg" alt="Hideaway" onerror="this.style.display='none'">
         </div>
@@ -138,6 +138,15 @@
           <div class="track-name">Hideaway</div>
         </div>
       </button>
+
+      <button class="track-row" type="button" data-track="sh-firstlook"
+              onclick="playMusic('Firstlook', 'Secret Hideaway', 'First Look.jpg', 'firstlook.mp3')">
+        <div class="track-thumb">
+          <img src="First Look.jpg" alt="Firstlook" onerror="this.style.display='none'">
+        </div>
+        <div class="track-info">
+          <div class="track-name">First Look</div>
+        </div>
 
     </div>
   </div>
@@ -626,8 +635,9 @@ Keikutsertaan mahasiswa Vokasi UI di Osaka World Expo 2025 menjadi bukti bahwa p
 
     <audio id="audioPlayer" preload="metadata"></audio>
   </div>
+<audio id="main-audio"></audio>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
 
