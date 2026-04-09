@@ -137,10 +137,10 @@ const musicTracks = {
 const musicPlaybackOrder = Object.keys(musicTracks);
 
 const moodPlaylists = {
-  chill: ['sh-ever', 'sh-fine', 'sh-hideaway'],
-  'get-up': ['jz-aku', 'sh-sike', 'sh-u'],
-  rage: ['jz-apakah', 'jz-asam', 'sh-try'],
-  'feeling-blue': ['sh-alleen', 'sh-melukis', 'jz-malam']
+  chill: ['sh-ever', 'sh-fine', 'sh-hideaway', 'sh-alleen', 'jz-romansa', 'jz-buku'],
+  'get-up': ['jz-aku', 'sh-sike', 'sh-u', 'sh-try', 'jz-asam', 'sh-fool'],
+  rage: ['jz-apakah', 'jz-asam', 'sh-try', 'sh-sike', 'jz-malam', 'sh-u'],
+  'feeling-blue': ['sh-alleen', 'sh-melukis', 'jz-malam', 'sh-hideaway', 'jz-romansa', 'sh-fine']
 };
 
 const moodMap = {
@@ -369,7 +369,7 @@ function ensureMoodCheckRoute() {
               <span class="mood-eye">◕</span>
               <span class="mood-eye">◕</span>
             </div>
-            <div class="mood-mouth"></div>
+            <div class="mood-mouth">﹏</div>
           </div>
           <div class="mood-label">Sensitive</div>
         </button>
@@ -380,7 +380,7 @@ function ensureMoodCheckRoute() {
               <span class="mood-eye">⊙</span>
               <span class="mood-eye">⊙</span>
             </div>
-            <div class="mood-mouth"></div>
+            <div class="mood-mouth">△</div>
           </div>
           <div class="mood-label">Stressed</div>
         </button>
@@ -391,7 +391,7 @@ function ensureMoodCheckRoute() {
               <span class="mood-eye">－</span>
               <span class="mood-eye">－</span>
             </div>
-            <div class="mood-mouth"></div>
+            <div class="mood-mouth">﹏</div>
           </div>
           <div class="mood-label">Bored</div>
         </button>
@@ -402,7 +402,7 @@ function ensureMoodCheckRoute() {
               <span class="mood-eye">◣</span>
               <span class="mood-eye">◢</span>
             </div>
-            <div class="mood-mouth"></div>
+            <div class="mood-mouth">⌄</div>
           </div>
           <div class="mood-label">Angry</div>
         </button>
@@ -413,7 +413,7 @@ function ensureMoodCheckRoute() {
               <span class="mood-eye">◕</span>
               <span class="mood-eye">◕</span>
             </div>
-            <div class="mood-mouth"></div>
+            <div class="mood-mouth">︵</div>
           </div>
           <div class="mood-label">Hurt</div>
         </button>
@@ -481,7 +481,7 @@ function ensurePlaylistDetailRoute() {
 
   route.innerHTML = `
     <div class="playlist-detail-wrap">
-      <button class="playlist-detail-back" type="button" id="playlistDetailBack">â† Back</button>
+      <button class="playlist-detail-back" type="button" id="playlistDetailBack">← Back</button>
 
       <div class="playlist-detail-hero">
         <div class="playlist-detail-hero-image" id="playlistHeroImageWrap"></div>
